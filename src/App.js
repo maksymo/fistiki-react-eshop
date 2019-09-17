@@ -3,11 +3,11 @@ import { Switch, Route } from 'react-router-dom';
 
 import { AppContainer } from './App.styles';
 
-import Header from './components/common/header/header.comp';
-import Footer from './components/common/footer/footer.comp';
-import HomePage from './pages/home/home.comp';
-import ProductPage from './pages/product/product.comp';
-import AuthenticationPage from './pages/authentication/authentication.comp';
+import Header from './components/common/Header/Header.comp';
+import Footer from './components/common/Footer/Footer.comp';
+import HomePage from './pages/Home/Home.comp';
+import ProductPage from './pages/Product/Product.comp';
+import AuthenticationPage from './pages/Authentication/Authentication.comp';
 
 const App = () => {
   return (

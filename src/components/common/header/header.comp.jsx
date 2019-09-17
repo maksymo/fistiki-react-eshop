@@ -5,7 +5,7 @@ import {
   LogoContainer,
   MenuItemsContainer,
   MenuItem
-} from './header.styles';
+} from './Header.styles';
 
 const Header = ({ currentUser }) => (
   <HeaderContainer>

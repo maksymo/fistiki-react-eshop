@@ -11,12 +11,10 @@ export const TopBannerContainer = styled.section`
 export const BannerLeft = styled.figure`
   grid-column: span 1;
   grid-row: span 2;
-  background-color: red;
 `;
 
 export const BannerRight = styled.figure`
   grid-column: span 1;
-  background-color: red;
 `;
 
 export const BannerImg = styled.img`

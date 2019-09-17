@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ProductPageContainer } from './product.styles';
+import { ProductPageContainer } from './Product.styles';
 
 const ProductPage = () => (
   <ProductPageContainer>Product page</ProductPageContainer>

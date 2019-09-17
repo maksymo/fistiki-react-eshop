@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AboutContainer } from './about.styles';
+import { AboutContainer } from './About.styles';
 
 const Benefits = () => (
   <AboutContainer>

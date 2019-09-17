@@ -5,7 +5,7 @@ import {
   BannerLeft,
   BannerRight,
   BannerImg
-} from './top-banner.styles';
+} from './Top-banner.styles';
 
 const TopBanner = () => (
   <TopBannerContainer>
