@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { SignInContainer } from './SignIn.styles';
+import { SignInContainer, InputField } from './SignIn.styles';
 
 import Button from '../../common/Button/Button.comp';
-import FormInput from '../../common/FormInput/FormInput.comp';
 
 const handleSubmit = event => {
   event.preventDefault();
-  console.log('submited');
+  console.log('submitted');
 };
 
 const handleInputChange = event => {
@@ -19,12 +18,26 @@ const SignIn = () => (
   <SignInContainer>
     Sign In
     <form onSubmit={handleSubmit}>
-      <FormInput
-        name="name"
-        label="Name"
-        type="text"
-        handleInputChange={handleInputChange}
+      <InputField
+        onChange={handleInputChange}
+        label="Email"
+        type="email"
+        name="email"
+        autoComplete="email"
+        margin="normal"
+        variant="outlined"
       />
+      <InputField
+        onChange={handleInputChange}
+        label="Password"
+        type="password"
+        name="password"
+        autoComplete="password"
+        margin="normal"
+        variant="outlined"
+      />
+      <div>Forgot Password?</div>
+      <div>You don't have an account? Click here to Sign-up.</div>
       <Button margin="1em 0 0 0">Sign In</Button>
     </form>
   </SignInContainer>
