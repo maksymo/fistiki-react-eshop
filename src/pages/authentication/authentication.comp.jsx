@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Container from '@material-ui/core/Container';
+
 import {
   AuthenticationContainer,
   AuthenticationImgContainer,
@@ -10,17 +12,19 @@ import {
 import SignIn from '../../components/authentication/SignIn/SignIn.comp';
 
 const AuthenticationPage = () => (
-  <AuthenticationContainer>
-    <AuthenticationImgContainer>
-      <AuthenticationImg
-        src="https://via.placeholder.com/500x500/ccc"
-        alt="greek pistachios"
-      />
-    </AuthenticationImgContainer>
-    <AuthenticationFormContainer>
-      <SignIn />
-    </AuthenticationFormContainer>
-  </AuthenticationContainer>
+  <Container maxWidth="lg">
+    <AuthenticationContainer>
+      <AuthenticationImgContainer>
+        <AuthenticationImg
+          src="https://via.placeholder.com/500x500/ccc"
+          alt="greek pistachios"
+        />
+      </AuthenticationImgContainer>
+      <AuthenticationFormContainer>
+        <SignIn />
+      </AuthenticationFormContainer>
+    </AuthenticationContainer>
+  </Container>
 );
 
 export default AuthenticationPage;
