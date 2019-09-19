@@ -11,11 +11,34 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#bef67a',
+      main: '#8bc34a',
+      dark: '#5a9216',
+      contrastText: '#fff'
+    },
+    secondary: {
+      light: '#a4a4a4',
+      main: '#757575',
+      dark: '#494949',
+      contrastText: '#fff'
+    }
+  },
+  spacing: 8
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <PersistGate persistor={persistor}>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </PersistGate>
     </BrowserRouter>
   </Provider>,

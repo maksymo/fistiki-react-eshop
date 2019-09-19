@@ -2,6 +2,7 @@ import React from 'react';
 
 import { SignInContainer, InputField } from './SignIn.styles';
 
+// import Button from '@material-ui/core/Button';
 import Button from '../../common/Button/Button.comp';
 
 const handleSubmit = event => {
@@ -38,7 +39,9 @@ const SignIn = () => (
       />
       <div>Forgot Password?</div>
       <div>You don't have an account? Click here to Sign-up.</div>
-      <Button margin="1em 0 0 0">Sign In</Button>
+      <Button margin="1em 0 0" variant="contained" size="large" color="primary">
+        Sign In
+      </Button>
     </form>
   </SignInContainer>
 );
