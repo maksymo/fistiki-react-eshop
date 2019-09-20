@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import colorVars from './utils/cssColorVars.js';
 
 export const AppContainer = styled.div`
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -18,7 +18,6 @@ export const Title = styled.h2`
   margin-top: 0;
   margin: ${props => (props.margin ? props.margin : '0 0 0.2em 0')};
   text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   text-align: ${props => (props.textAlign ? props.textAlign : 'center')};
   color: ${props =>

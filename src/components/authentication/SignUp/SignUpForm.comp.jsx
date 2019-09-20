@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { SignInContainer, InputField } from './SignIn.styles';
+import { SignUpContainer, InputField } from './SignUpForm.styles';
 
-// import Button from '@material-ui/core/Button';
 import Button from '../../common/Button/Button.comp';
 
 const handleSubmit = event => {
@@ -16,8 +15,7 @@ const handleInputChange = event => {
 };
 
 const SignIn = () => (
-  <SignInContainer>
-    Sign In
+  <SignUpContainer>
     <form onSubmit={handleSubmit}>
       <InputField
         onChange={handleInputChange}
@@ -37,13 +35,28 @@ const SignIn = () => (
         margin="normal"
         variant="outlined"
       />
-      <div>Forgot Password?</div>
-      <div>You don't have an account? Click here to Sign-up.</div>
-      <Button margin="1em 0 0" variant="contained" size="large" color="primary">
-        Sign In
+      <InputField
+        onChange={handleInputChange}
+        label="Confirm Password"
+        type="password"
+        name="confirmPassword"
+        autoComplete="confirmPassword"
+        margin="normal"
+        variant="outlined"
+      />
+      <Button
+        margin="1em 0.5em 0 0"
+        variant="contained"
+        size="large"
+        color="primary"
+      >
+        Create Account
+      </Button>
+      <Button margin="1em 0 0 0.5em" size="large" color="primary">
+        Back to Sign In
       </Button>
     </form>
-  </SignInContainer>
+  </SignUpContainer>
 );
 
 export default SignIn;

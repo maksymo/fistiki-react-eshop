@@ -4,5 +4,6 @@ import { styled } from '@material-ui/styles';
 
 export const ButtonContainer = styled(Button)({
   borderRadius: 0,
+  fontWeight: 600,
   margin: props => (props.margin ? props.margin : '0')
 });
