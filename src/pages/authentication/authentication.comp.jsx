@@ -50,14 +50,16 @@ const AuthenticationPage = ({ activeComponent }) => (
       <AuthenticationFormContainer>
         <AuthenticationFormWrapper>
           <Title fontSize="2em">{pageHeaderOptions[activeComponent]}</Title>
-          <SocialSignInContainer>
-            <IconButton aria-label="google">
-              <FontAwesomeIcon size="lg" icon={faGoogle} />
-            </IconButton>
-            <IconButton aria-label="facebook">
-              <FontAwesomeIcon size="lg" icon={faFacebook} />
-            </IconButton>
-          </SocialSignInContainer>
+          {activeComponent === 'signIn' || activeComponent === 'signUp' ? (
+            <SocialSignInContainer>
+              <IconButton aria-label="google">
+                <FontAwesomeIcon size="lg" icon={faGoogle} />
+              </IconButton>
+              <IconButton aria-label="facebook">
+                <FontAwesomeIcon size="lg" icon={faFacebook} />
+              </IconButton>
+            </SocialSignInContainer>
+          ) : null}
           <FormTitle>{formTitleOptions[activeComponent]}</FormTitle>
           {activeComponent === 'signIn' ? <SignInForm /> : null}
           {activeComponent === 'signUp' ? <SignUpForm /> : null}
