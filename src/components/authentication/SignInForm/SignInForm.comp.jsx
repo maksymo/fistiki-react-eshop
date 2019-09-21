@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { setActiveComponent } from '../../../redux/authentication/authentication.actions';
 
 import {
   SignInContainer,
@@ -20,7 +23,7 @@ const handleInputChange = event => {
   console.log(`name: ${name}, value: ${value}`);
 };
 
-const SignIn = () => {
+const SignIn = ({ setActiveComponent }) => {
   const theme = useTheme();
   return (
     <SignInContainer>
@@ -43,7 +46,10 @@ const SignIn = () => {
           margin="normal"
           variant="outlined"
         />
-        <ForgotPasswordText color={theme.palette.primary.main}>
+        <ForgotPasswordText
+          color={theme.palette.primary.main}
+          onClick={() => setActiveComponent('forgotPassword')}
+        >
           Forgot Password?
         </ForgotPasswordText>
         <Button
@@ -54,7 +60,12 @@ const SignIn = () => {
         >
           Sign In
         </Button>
-        <Button margin="1em 0 0 0.5em" size="large" color="primary">
+        <Button
+          margin="1em 0 0 0.5em"
+          size="large"
+          color="primary"
+          onClick={() => setActiveComponent('signUp')}
+        >
           Create Account
         </Button>
       </form>
@@ -62,4 +73,11 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+const mapActionsToProps = dispatch => ({
+  setActiveComponent: component => dispatch(setActiveComponent(component))
+});
+
+export default connect(
+  null,
+  mapActionsToProps
+)(SignIn);

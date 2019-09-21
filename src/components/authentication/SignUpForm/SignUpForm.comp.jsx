@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { setActiveComponent } from '../../../redux/authentication/authentication.actions';
 
 import { SignUpContainer, InputField } from './SignUpForm.styles';
 
@@ -14,7 +17,7 @@ const handleInputChange = event => {
   console.log(`name: ${name}, value: ${value}`);
 };
 
-const SignIn = () => (
+const SignIn = ({ setActiveComponent }) => (
   <SignUpContainer>
     <form onSubmit={handleSubmit}>
       <InputField
@@ -52,11 +55,23 @@ const SignIn = () => (
       >
         Create Account
       </Button>
-      <Button margin="1em 0 0 0.5em" size="large" color="primary">
+      <Button
+        margin="1em 0 0 0.5em"
+        size="large"
+        color="primary"
+        onClick={() => setActiveComponent('signIn')}
+      >
         Back to Sign In
       </Button>
     </form>
   </SignUpContainer>
 );
 
-export default SignIn;
+const mapActionsToProps = dispatch => ({
+  setActiveComponent: component => dispatch(setActiveComponent(component))
+});
+
+export default connect(
+  null,
+  mapActionsToProps
+)(SignIn);

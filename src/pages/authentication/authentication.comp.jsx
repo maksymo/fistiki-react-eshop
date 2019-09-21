@@ -1,4 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+import { setActiveComponent } from '../../redux/authentication/authentication.actions';
+import { selectActiveComponent } from '../../redux/authentication/authentication.selectors';
 
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
@@ -29,11 +34,11 @@ const pageHeaderOptions = {
 
 const formTitleOptions = {
   signIn: 'or sign in with your email',
-  signUp: 'or sign up with your email',
+  signUp: 'or sign in with your email',
   forgotPassword: 'type your email address to get a verification email'
 };
 
-const AuthenticationPage = () => (
+const AuthenticationPage = ({ activeComponent }) => (
   <Container maxWidth="xl">
     <AuthenticationContainer>
       <AuthenticationImgContainer>
@@ -44,7 +49,7 @@ const AuthenticationPage = () => (
       </AuthenticationImgContainer>
       <AuthenticationFormContainer>
         <AuthenticationFormWrapper>
-          <Title fontSize="2em">{pageHeaderOptions['signIn']}</Title>
+          <Title fontSize="2em">{pageHeaderOptions[activeComponent]}</Title>
           <SocialSignInContainer>
             <IconButton aria-label="google">
               <FontAwesomeIcon size="lg" icon={faGoogle} />
@@ -53,14 +58,25 @@ const AuthenticationPage = () => (
               <FontAwesomeIcon size="lg" icon={faFacebook} />
             </IconButton>
           </SocialSignInContainer>
-          <FormTitle>{formTitleOptions['signIn']}</FormTitle>
-          <SignInForm />
-          <SignUpForm />
-          <PasswordResetForm />
+          <FormTitle>{formTitleOptions[activeComponent]}</FormTitle>
+          {activeComponent === 'signIn' ? <SignInForm /> : null}
+          {activeComponent === 'signUp' ? <SignUpForm /> : null}
+          {activeComponent === 'forgotPassword' ? <PasswordResetForm /> : null}
         </AuthenticationFormWrapper>
       </AuthenticationFormContainer>
     </AuthenticationContainer>
   </Container>
 );
 
-export default AuthenticationPage;
+const mapStateToProps = createStructuredSelector({
+  activeComponent: selectActiveComponent
+});
+
+const mapActionsToProps = dispatch => ({
+  setActiveComponent: component => dispatch(setActiveComponent(component))
+});
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(AuthenticationPage);

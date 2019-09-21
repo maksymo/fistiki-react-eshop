@@ -2,12 +2,12 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-// import authenticationReducer from './authentication/authentication.reducer';
+import authenticationReducer from './authentication/authentication.reducer';
 // import cartReducer from './cart/cart.reducer';
 // import shopReducer from './shop/shop.reducer';
 
 const rootReducer = combineReducers({
-  // authentication: authenticationReducer,
+  authentication: authenticationReducer
   // cart: cartReducer,
   // shop: shopReducer
 });
