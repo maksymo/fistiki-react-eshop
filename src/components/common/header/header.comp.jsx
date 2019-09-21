@@ -14,6 +14,7 @@ const Header = ({ currentUser }) => (
     </LogoContainer>
     <MenuItemsContainer>
       <MenuItem to="/">Home</MenuItem>
+      <MenuItem to="/shop">Products</MenuItem>
       {currentUser ? (
         <MenuItem as="div" onClick={() => console.log('sign-out')}>
           Sign Out
