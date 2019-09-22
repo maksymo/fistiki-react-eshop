@@ -14,22 +14,17 @@ import './index.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
+import colorVars from './utils/cssColorVars';
+
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      light: '#bef67a',
-      main: '#8bc34a',
-      dark: '#5a9216',
-      contrastText: '#fff'
-    },
-    secondary: {
-      light: '#a4a4a4',
-      main: '#757575',
-      dark: '#494949',
-      contrastText: '#fff'
-    }
+    primary: colorVars.primary,
+    secondary: colorVars.secondary
   },
-  spacing: 8
+  spacing: 8,
+  shape: {
+    borderRadius: 0
+  }
 });
 
 ReactDOM.render(

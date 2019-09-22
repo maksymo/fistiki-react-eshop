@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { setActiveComponent } from '../../../redux/authentication/authentication.actions';
 
 import { SignUpContainer, InputField } from './SignUpForm.styles';
+import { ActionButtonsContainer } from '../../../App.styles';
 
-import Button from '../../common/Button/Button.comp';
+import { Button } from '@material-ui/core';
 
 const handleSubmit = event => {
   event.preventDefault();
@@ -47,22 +48,18 @@ const SignIn = ({ setActiveComponent }) => (
         margin="normal"
         variant="outlined"
       />
-      <Button
-        margin="1em 0.5em 0 0"
-        variant="contained"
-        size="large"
-        color="primary"
-      >
-        Create Account
-      </Button>
-      <Button
-        margin="1em 0 0 0.5em"
-        size="large"
-        color="primary"
-        onClick={() => setActiveComponent('signIn')}
-      >
-        Back to Sign In
-      </Button>
+      <ActionButtonsContainer>
+        <Button variant="contained" size="large" color="primary">
+          Create Account
+        </Button>
+        <Button
+          size="large"
+          color="primary"
+          onClick={() => setActiveComponent('signIn')}
+        >
+          Back to Sign In
+        </Button>
+      </ActionButtonsContainer>
     </form>
   </SignUpContainer>
 );

@@ -13,11 +13,9 @@ import {
   QuantityArrows
 } from './Product.styles';
 
-import { Grid } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
-
-import Button from '../../components/common/Button/Button.comp';
 
 const ProductPage = () => (
   <ProductPageContainer maxWidth="lg">

@@ -1,10 +1,23 @@
 export default {
-  textColorDefault1: '#404040',
-  textColorDefault2: '#8a8a8a',
-  textColorLight1: '#f1f1f1',
-  textColorLight2: '#e8e8e8',
-  primary: '#73bc5d',
-  secondary: '#404040',
+  primary: {
+    light: '#bef67a',
+    main: '#8bc34a',
+    dark: '#5a9216',
+    contrastText: '#fff'
+  },
+  secondary: {
+    light: '#a4a4a4',
+    main: '#757575',
+    dark: '#494949',
+    contrastText: '#fff'
+  },
+  text: {
+    lighter: '#f1f1f1',
+    light: '#e8e8e8',
+    main: '#494949',
+    dark: '#404040'
+  },
+  white: '#fff',
   greyDark4: '#424242',
   greyDark3: '#616161',
   greyDark2: '#757575',

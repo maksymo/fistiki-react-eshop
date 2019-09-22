@@ -8,9 +8,9 @@ import {
   InputField,
   ForgotPasswordText
 } from './SignInForm.styles';
+import { ActionButtonsContainer } from '../../../App.styles';
 
-import Button from '../../common/Button/Button.comp';
-
+import { Button } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 
 const handleSubmit = event => {
@@ -52,22 +52,19 @@ const SignIn = ({ setActiveComponent }) => {
         >
           Forgot Password?
         </ForgotPasswordText>
-        <Button
-          margin="1em 0.5em 0 0"
-          variant="contained"
-          size="large"
-          color="primary"
-        >
-          Sign In
-        </Button>
-        <Button
-          margin="1em 0 0 0.5em"
-          size="large"
-          color="primary"
-          onClick={() => setActiveComponent('signUp')}
-        >
-          Create Account
-        </Button>
+        <ActionButtonsContainer>
+          <Button variant="contained" size="large" color="primary">
+            Sign In
+          </Button>
+          <Button
+            mx={2}
+            size="large"
+            color="primary"
+            onClick={() => setActiveComponent('signUp')}
+          >
+            Create Account
+          </Button>
+        </ActionButtonsContainer>
       </form>
     </SignInContainer>
   );

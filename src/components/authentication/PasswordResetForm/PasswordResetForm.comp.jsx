@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { setActiveComponent } from '../../../redux/authentication/authentication.actions';
 
 import { PasswordResetContainer, InputField } from './PasswordResetForm.styles';
+import { ActionButtonsContainer } from '../../../App.styles';
 
-import Button from '../../common/Button/Button.comp';
+import { Button } from '@material-ui/core';
 
 const handleSubmit = event => {
   event.preventDefault();
@@ -29,22 +30,18 @@ const SignIn = ({ setActiveComponent }) => (
         margin="normal"
         variant="outlined"
       />
-      <Button
-        margin="1em 0.5em 0 0"
-        variant="contained"
-        size="large"
-        color="primary"
-      >
-        Request New Password
-      </Button>
-      <Button
-        margin="1em 0 0 0.5em"
-        size="large"
-        color="primary"
-        onClick={() => setActiveComponent('signIn')}
-      >
-        Cancel
-      </Button>
+      <ActionButtonsContainer>
+        <Button variant="contained" size="large" color="primary">
+          Submit
+        </Button>
+        <Button
+          size="large"
+          color="primary"
+          onClick={() => setActiveComponent('signIn')}
+        >
+          Cancel
+        </Button>
+      </ActionButtonsContainer>
     </form>
   </PasswordResetContainer>
 );
