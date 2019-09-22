@@ -1,4 +1,4 @@
-# Fistiki Shop
+# Fistiki Shop &#128679; UNDER CONSTRUCTION &#128679;
 
 An example e-shop build on react.
 
