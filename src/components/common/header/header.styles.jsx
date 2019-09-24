@@ -1,16 +1,28 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-// import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-// export const useStyles = makeStyles(theme => ({
-//   menuButton: {
-//     display: 'block',
-//     marginRight: theme.spacing(2),
-//     [theme.breakpoints.up('sm')]: {
-//       display: 'none'
-//     }
-//   }
-// }));
+export const useStyles = makeStyles(theme => ({
+  toolbarMenu: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  toolbarLogo: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  toolbarButtons: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  }
+}));
+
+// export const ToolbarGrid = styled(Grid)`
+//   display: flex;
+//   align-items: center;
+// `;
 
 export const MenuButtonContainer = styled.div`
   display: block;
@@ -28,6 +40,14 @@ export const MenuItemsContainer = styled.div`
   display: none;
   @media (min-width: 768px) {
     display: flex;
+  }
+`;
+
+export const GreetingContainer = styled.div`
+  display: none;
+  @media (min-width: 768px) {
+    font-size: 0.9em;
+    display: block;
   }
 `;
 
