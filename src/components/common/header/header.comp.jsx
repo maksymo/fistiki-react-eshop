@@ -8,7 +8,6 @@ import {
   MenuItem,
   useStyles
 } from './Header.styles';
-// import { FlexGrow } from '../../../App.styles';
 
 import { AppBar, Toolbar, IconButton, Badge, Grid } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -129,6 +128,7 @@ const Header = ({ currentUser }) => {
         anchorEl={profilePopoverAnchorEl}
         isOpen={isProfilePopoverActive}
         popoverId={profilePopoverId}
+        currentUser={currentUser}
         handleMenuClose={() => handlePopoverClose(profilePopoverId)}
       />
       <MenuPopover
