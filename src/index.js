@@ -17,6 +17,11 @@ import { ThemeProvider } from '@material-ui/styles';
 import colorVars from './utils/cssColorVars';
 
 const theme = createMuiTheme({
+  mixins: {
+    toolbar: {
+      minHeight: 115
+    }
+  },
   palette: {
     primary: colorVars.primary,
     secondary: colorVars.secondary

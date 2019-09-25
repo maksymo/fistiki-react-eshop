@@ -10,7 +10,8 @@ export const useStyles = makeStyles(theme => ({
   toolbarLogo: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexGrow: 1
   },
   toolbarButtons: {
     display: 'flex',

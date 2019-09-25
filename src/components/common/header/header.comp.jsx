@@ -69,7 +69,7 @@ const Header = ({ currentUser }) => {
       <AppBar position="static" color="inherit" elevation={0}>
         <Toolbar>
           <Grid container spacing={1}>
-            <Grid item xs={4} className={classes.toolbarMenu}>
+            <Grid item className={classes.toolbarMenu}>
               <MenuItemsContainer>
                 <MenuItem to="/">Home</MenuItem>
                 <MenuItem to="/shop">Products</MenuItem>
@@ -87,12 +87,12 @@ const Header = ({ currentUser }) => {
                 </IconButton>
               </MenuButtonContainer>
             </Grid>
-            <Grid item xs={4} className={classes.toolbarLogo}>
+            <Grid item className={classes.toolbarLogo}>
               <LogoContainer to="/">
                 <strong>Fistiki</strong> Pistachio Nuts
               </LogoContainer>
             </Grid>
-            <Grid item xs={4} className={classes.toolbarButtons}>
+            <Grid item className={classes.toolbarButtons}>
               <GreetingContainer>
                 Hello, {currentUser ? currentUser.name : 'Guest'}!
               </GreetingContainer>
