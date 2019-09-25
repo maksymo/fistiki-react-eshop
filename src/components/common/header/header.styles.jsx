@@ -19,11 +19,6 @@ export const useStyles = makeStyles(theme => ({
   }
 }));
 
-// export const ToolbarGrid = styled(Grid)`
-//   display: flex;
-//   align-items: center;
-// `;
-
 export const MenuButtonContainer = styled.div`
   display: block;
   margin-right: 1em;
