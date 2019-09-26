@@ -12,6 +12,11 @@ import {
 } from './About.styles';
 import { Title, Subtitle } from '../../../App.styles';
 
+import pistachioTree1 from '../../../assets/images/home/about/pistachio-tree1.jpg';
+import pistachioTree2 from '../../../assets/images/home/about/pistachio-tree2.jpg';
+import pistachioTree3 from '../../../assets/images/home/about/pistachio-tree3.jpg';
+import pistachios from '../../../assets/images/home/about/pistachios.jpg';
+
 const Benefits = () => (
   <Container maxWidth="xl">
     <AboutContainer>
@@ -25,13 +30,13 @@ const Benefits = () => (
           and the limited production makes our pistachios a premium product.
         </AboutTextBody>
         <AboutImgContainer>
-          <AboutImg src="https://via.placeholder.com/300x300/ccc" alt="" />
+          <AboutImg src={pistachioTree1} alt="greek pistachio tree" />
         </AboutImgContainer>
         <AboutImgContainer>
-          <AboutImg src="https://via.placeholder.com/300x300/ccc" alt="" />
+          <AboutImg src={pistachioTree2} alt="greek pistachio tree" />
         </AboutImgContainer>
         <AboutImgContainer>
-          <AboutImg src="https://via.placeholder.com/300x300/ccc" alt="" />
+          <AboutImg src={pistachioTree3} alt="greek pistachio tree" />
         </AboutImgContainer>
         <AboutTextTitle>exceptional taste</AboutTextTitle>
         <AboutTextBody>
@@ -41,7 +46,7 @@ const Benefits = () => (
           aroma.
         </AboutTextBody>
         <AboutImgContainer columnSpan={6}>
-          <AboutImg src="https://via.placeholder.com/300x300/ccc" alt="" />
+          <AboutImg src={pistachios} alt="greek pistachios" />
         </AboutImgContainer>
         <AboutTextTitle>premium pistachios</AboutTextTitle>
         <AboutTextBody>

@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import Container from '@material-ui/core/Container';
 
-export const ShopPageContainer = styled(Container)``;
+import pistachiosImage from '../../assets/images/products/greek-pistachios.jpg'
+
+export const ShopPageContainer = styled(Container)``;;
 
 export const TopBannerContainer = styled.div`
   height: 15em;
@@ -9,7 +11,7 @@ export const TopBannerContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url('https://via.placeholder.com/1200x300/aaa');
+  background-image: url(${pistachiosImage});
   background-size: cover;
 `;
 

@@ -26,6 +26,8 @@ import SignInForm from '../../components/authentication/SignInForm/SignInForm.co
 import SignUpForm from '../../components/authentication/SignUpForm/SignUpForm.comp';
 import PasswordResetForm from '../../components/authentication/PasswordResetForm/PasswordResetForm.comp';
 
+import pistachiosImage from '../../assets/images/signIn/greek-pistachios.jpg';
+
 const pageHeaderOptions = {
   signIn: 'Sign In',
   signUp: 'Create New Account',
@@ -42,10 +44,7 @@ const AuthenticationPage = ({ activeComponent }) => (
   <Container maxWidth="xl">
     <AuthenticationContainer>
       <AuthenticationImgContainer>
-        <AuthenticationImg
-          src="https://via.placeholder.com/500x500/ccc"
-          alt="greek pistachios"
-        />
+        <AuthenticationImg src={pistachiosImage} alt="greek pistachios" />
       </AuthenticationImgContainer>
       <AuthenticationFormContainer>
         <AuthenticationFormWrapper>

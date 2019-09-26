@@ -30,7 +30,8 @@ export const Subtitle = styled.h3`
   font-style: italic;
   font-weight: 400;
   margin: ${props => (props.margin ? props.margin : '0 0 2em 0')};
-  color: ${props => (props.light ? colorVars.text.lighter : colorVars.grey)};
+  color: ${props =>
+    props.light ? colorVars.text.lighter : colorVars.greyDark1};
   text-align: ${props => (props.textAlign ? props.textAlign : 'center')};
 `;
 
