@@ -38,3 +38,25 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Adding AWS Amplify
+This project uses AWS Amplify for authentication (Cognito) and for the API using GraphQL.
+
+### Initialize AWS Amplify:
+### `amplify init`
+
+* Enter a name for the project **YOUR_PROJECT_NAME**
+* Enter a name for the environment **ENVIRONMENT_NAME**
+* Choose your default editor: **YOUR_CODE_EDITOR**
+* Choose the type of app that you're building **javascript**
+* What javascript framework are you using **react**
+* Source Directory Path:  **src**
+* Distribution Directory Path: **build**
+* Build Command:  **yarn build**
+* Start Command: **yarn start**
+
+### Add API:
+### `amplify add api`
+* Please select from one of the below mentioned services **GraphQL**
+* Provide API name: **YOUR_API_NAME**
+* Choose an authorization type for the API **Amazon Cognito User Pool**
