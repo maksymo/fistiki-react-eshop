@@ -1,5 +1,3 @@
-# AWS Amplify example schema:
-#
 # type Task 
 #   @model 
 #   @auth(rules: [
@@ -20,13 +18,37 @@
 #   content: String!
 # }
 
+
+# Specify queries so we restrict all queries for owners and admin.
+type User @model @auth(rules: [
+    {allow: groups, groups: ["ROLE_ADMIN"], queries: [get, list], mutations: [create, update, delete]},
+    {allow: owner, queries: [get], mutations: [create, update]}
+  ])
+{
+  id: ID!
+  firstName: String
+  lastName: String
+  email: String!
+  address1: String
+  address2: String
+  city: String
+  state: String
+  zipCode: String
+  country: String
+  tel: String
+  orders: [Order] @connection(name: "UserOrders")
+  createdAt: String!
+  updatedAt: String
+}
+
+# queries: null to disable auth for queries.
 type Product @model @auth(rules: [
     {allow: groups, groups: ["ROLE_ADMIN"], queries: null, mutations: [create, update, delete]},
   ])
 {
   id: ID!
   seo: String!
-  category: [Category] @connection(name: "ProductCategory")
+  category: [Category] @connection(name: "ProductCategories")
   name: String
   shortDescription: String
   description: String
@@ -44,6 +66,7 @@ type Product @model @auth(rules: [
   updatedAt: String
 }
 
+# queries: null to disable auth for queries.
 type Category @model @auth(rules: [
     {allow: groups, groups: ["ROLE_ADMIN"], queries: null, mutations: [create, update, delete]},
   ])
@@ -51,9 +74,10 @@ type Category @model @auth(rules: [
   id: ID!
   seo: String!
   name: String!
-  products: [Category] @connection(name: "ProductCategory")
+  products: [Product] @connection(name: "ProductCategories")
 }
 
+# Specify queries so we restrict all queries for owners and admin.
 type Order @model @auth(rules: [
     {allow: groups, groups: ["ROLE_ADMIN"], queries: [get, list], mutations: [create, update, delete]},
     {allow: owner, queries: [get, list], mutations: [create]}
@@ -62,9 +86,6 @@ type Order @model @auth(rules: [
   id: ID!
   firstName: String!
   lastName: String!
-  email: String!
-  shippingFirstName: String!
-  shippingLastName: String!
   address1: String!
   address2: String
   city: String!
@@ -74,10 +95,12 @@ type Order @model @auth(rules: [
   tel: String
   shippingMethod: String
   products: [Product!]!
+  user: User! @connection(name: "UserOrders")
   createdAt: String!
   updatedAt: String
 }
 
+# queries: null to disable auth for queries.
 type Image @model @auth(rules: [
   {allow: groups, groups: ["ROLE_ADMIN"], queries: null, mutations: [create, update, delete]},
 ]) {
