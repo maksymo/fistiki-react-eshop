@@ -16,6 +16,9 @@ import { ThemeProvider } from '@material-ui/styles';
 
 import colorVars from './utils/cssColorVars';
 
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+
 const theme = createMuiTheme({
   mixins: {
     toolbar: {
@@ -31,6 +34,8 @@ const theme = createMuiTheme({
     borderRadius: 0
   }
 });
+
+Amplify.configure(aws_exports);
 
 ReactDOM.render(
   <Provider store={store}>

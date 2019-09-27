@@ -1,0 +1,95 @@
+# AWS Amplify example schema:
+#
+# type Task 
+#   @model 
+#   @auth(rules: [
+#       {allow: groups, groups: ["Managers"], queries: null, mutations: [create, update, delete]},
+#       {allow: groups, groups: ["Employees"], queries: [get, list], mutations: null}
+#     ])
+# {
+#   id: ID!
+#   title: String!
+#   description: String
+#   status: String
+# }
+# type PrivateNote
+#   @model
+#   @auth(rules: [{allow: owner}])
+# {
+#   id: ID!
+#   content: String!
+# }
+
+type Product @model @auth(rules: [
+    {allow: groups, groups: ["ROLE_ADMIN"], queries: null, mutations: [create, update, delete]},
+  ])
+{
+  id: ID!
+  seo: String!
+  category: [Category] @connection(name: "ProductCategory")
+  name: String
+  shortDescription: String
+  description: String
+  images: [Image] @connection(name: "ProductImages")
+  price: Float
+  discount: Float
+  productCode: String
+  stock: Int
+  container: String
+  weight: Float
+  weightUnit: String
+  unit: String
+  active: Boolean
+  createdAt: String!
+  updatedAt: String
+}
+
+type Category @model @auth(rules: [
+    {allow: groups, groups: ["ROLE_ADMIN"], queries: null, mutations: [create, update, delete]},
+  ])
+{
+  id: ID!
+  seo: String!
+  name: String!
+  products: [Category] @connection(name: "ProductCategory")
+}
+
+type Order @model @auth(rules: [
+    {allow: groups, groups: ["ROLE_ADMIN"], queries: [get, list], mutations: [create, update, delete]},
+    {allow: owner, queries: [get, list], mutations: [create]}
+  ])
+{
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  shippingFirstName: String!
+  shippingLastName: String!
+  address1: String!
+  address2: String
+  city: String!
+  state: String!
+  zipCode: String!
+  country: String!
+  tel: String
+  shippingMethod: String
+  products: [Product!]!
+  createdAt: String!
+  updatedAt: String
+}
+
+type Image @model @auth(rules: [
+  {allow: groups, groups: ["ROLE_ADMIN"], queries: null, mutations: [create, update, delete]},
+]) {
+  id: ID!
+  product: Product @connection(name: "ProductImages")
+  bucket: String!
+  fullsize: ImageS3Info!
+  thumbnail: ImageS3Info!
+}
+
+type ImageS3Info {
+  key: String!
+  width: Int!
+  height: Int!
+}
