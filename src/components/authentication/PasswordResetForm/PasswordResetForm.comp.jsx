@@ -37,7 +37,7 @@ const SignIn = ({ setActiveComponent }) => (
         <Button
           size="large"
           color="primary"
-          onClick={() => setActiveComponent('signIn')}
+          onClick={() => setActiveComponent('SIGN_IN')}
         >
           Cancel
         </Button>

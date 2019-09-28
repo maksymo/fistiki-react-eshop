@@ -48,7 +48,7 @@ const SignIn = ({ setActiveComponent }) => {
         />
         <ForgotPasswordText
           color={theme.palette.primary.main}
-          onClick={() => setActiveComponent('forgotPassword')}
+          onClick={() => setActiveComponent('FORGOT_PASSWORD')}
         >
           Forgot Password?
         </ForgotPasswordText>
@@ -60,7 +60,7 @@ const SignIn = ({ setActiveComponent }) => {
             mx={2}
             size="large"
             color="primary"
-            onClick={() => setActiveComponent('signUp')}
+            onClick={() => setActiveComponent('SIGN_UP')}
           >
             Create Account
           </Button>

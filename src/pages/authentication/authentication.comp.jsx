@@ -25,19 +25,22 @@ import { Title } from '../../App.styles';
 import SignInForm from '../../components/authentication/SignInForm/SignInForm.comp';
 import SignUpForm from '../../components/authentication/SignUpForm/SignUpForm.comp';
 import PasswordResetForm from '../../components/authentication/PasswordResetForm/PasswordResetForm.comp';
+import VerifySignUp from '../../components/authentication/VerifySignUp/VerifySignUp.comp';
 
 import pistachiosImage from '../../assets/images/signIn/greek-pistachios.jpg';
 
 const pageHeaderOptions = {
-  signIn: 'Sign In',
-  signUp: 'Create New Account',
-  forgotPassword: 'Retrieve Password'
+  SIGN_IN: 'Sign In',
+  SIGN_UP: 'Create New Account',
+  FORGOT_PASSWORD: 'Retrieve Password',
+  VERIFY_EMAIL: 'Verify E-mail Address'
 };
 
 const formTitleOptions = {
-  signIn: 'or sign in with your email',
-  signUp: 'or sign in with your email',
-  forgotPassword: 'type your email address to get a verification email'
+  SIGN_IN: 'or sign in with your email',
+  SIGN_UP: 'or sign in with your email',
+  FORGOT_PASSWORD: 'type your email address to get a verification email',
+  VERIFY_EMAIL: 'type the code your received in your email address'
 };
 
 const AuthenticationPage = ({ activeComponent }) => (
@@ -49,7 +52,7 @@ const AuthenticationPage = ({ activeComponent }) => (
       <AuthenticationFormContainer>
         <AuthenticationFormWrapper>
           <Title fontSize="2em">{pageHeaderOptions[activeComponent]}</Title>
-          {activeComponent === 'signIn' || activeComponent === 'signUp' ? (
+          {activeComponent === 'SIGN_IN' || activeComponent === 'SIGN_UP' ? (
             <SocialSignInContainer>
               <IconButton aria-label="google">
                 <FontAwesomeIcon size="lg" icon={faGoogle} />
@@ -60,9 +63,10 @@ const AuthenticationPage = ({ activeComponent }) => (
             </SocialSignInContainer>
           ) : null}
           <FormTitle>{formTitleOptions[activeComponent]}</FormTitle>
-          {activeComponent === 'signIn' ? <SignInForm /> : null}
-          {activeComponent === 'signUp' ? <SignUpForm /> : null}
-          {activeComponent === 'forgotPassword' ? <PasswordResetForm /> : null}
+          {activeComponent === 'SIGN_IN' ? <SignInForm /> : null}
+          {activeComponent === 'SIGN_UP' ? <SignUpForm /> : null}
+          {activeComponent === 'FORGOT_PASSWORD' ? <PasswordResetForm /> : null}
+          {activeComponent === 'VERIFY_EMAIL' ? <VerifySignUp /> : null}
         </AuthenticationFormWrapper>
       </AuthenticationFormContainer>
     </AuthenticationContainer>
