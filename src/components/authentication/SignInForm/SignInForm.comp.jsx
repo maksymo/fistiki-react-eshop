@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import { setActiveComponent } from '../../../redux/authentication/authentication.actions';
+import {
+  setActiveComponent,
+  signInStart
+} from '../../../redux/authentication/authentication.actions';
 
 import {
   SignInContainer,
@@ -13,18 +16,28 @@ import { ActionButtonsContainer } from '../../../App.styles';
 import { Button } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 
-const handleSubmit = event => {
-  event.preventDefault();
-  console.log('submitted');
-};
+const SignIn = ({ setActiveComponent, signInStart }) => {
+  const [userData, setUserData] = useState({
+    username: '',
+    password: ''
+  });
+  const { username, password } = userData;
 
-const handleInputChange = event => {
-  const { value, name } = event.target;
-  console.log(`name: ${name}, value: ${value}`);
-};
+  const handleSubmit = event => {
+    event.preventDefault();
+    signInStart(userData);
+  };
 
-const SignIn = ({ setActiveComponent }) => {
+  const handleInputChange = event => {
+    const { value, name } = event.target;
+    setUserData({
+      ...userData,
+      [name]: value
+    });
+  };
+
   const theme = useTheme();
+
   return (
     <SignInContainer>
       <form onSubmit={handleSubmit}>
@@ -32,7 +45,8 @@ const SignIn = ({ setActiveComponent }) => {
           onChange={handleInputChange}
           label="Email"
           type="email"
-          name="email"
+          name="username"
+          value={username}
           autoComplete="email"
           margin="normal"
           variant="outlined"
@@ -42,6 +56,7 @@ const SignIn = ({ setActiveComponent }) => {
           label="Password"
           type="password"
           name="password"
+          value={password}
           autoComplete="password"
           margin="normal"
           variant="outlined"
@@ -53,7 +68,12 @@ const SignIn = ({ setActiveComponent }) => {
           Forgot Password?
         </ForgotPasswordText>
         <ActionButtonsContainer>
-          <Button variant="contained" size="large" color="primary">
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={handleSubmit}
+          >
             Sign In
           </Button>
           <Button
@@ -71,7 +91,8 @@ const SignIn = ({ setActiveComponent }) => {
 };
 
 const mapActionsToProps = dispatch => ({
-  setActiveComponent: component => dispatch(setActiveComponent(component))
+  setActiveComponent: component => dispatch(setActiveComponent(component)),
+  signInStart: userData => dispatch(signInStart(userData))
 });
 
 export default connect(

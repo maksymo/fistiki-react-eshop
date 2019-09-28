@@ -9,7 +9,9 @@ import {
   verifyEmailAddressSuccess,
   verifyEmailAddressFailure,
   resendVerificationEmailSuccess,
-  resendVerificationEmailFailure
+  resendVerificationEmailFailure,
+  signInSuccess,
+  signInFailure
 } from './authentication.actions';
 
 export function* signUp({ payload: { email, password } }) {
@@ -59,10 +61,53 @@ export function* onResendVerificationEmailStart() {
   );
 }
 
+export function* signInWithEmail({ payload: { username, password } }) {
+  try {
+    const user = yield Auth.signIn(username, password);
+    if (
+      user.challengeName === 'SMS_MFA' ||
+      user.challengeName === 'SOFTWARE_TOKEN_MFA'
+    ) {
+      // Create UI to get MFA code and then execute Auth.confirmSignIn()
+    } else if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+      // Create UI to get new password and additional data if needed.
+    } else if (user.challengeName === 'MFA_SETUP') {
+      // This happens when the MFA method is TOTP - Create UI to support setup TOTP
+      Auth.setupTOTP(user);
+    } else {
+      // The user directly signs in
+      yield put(signInSuccess(user));
+    }
+  } catch (error) {
+    if (error.code === 'UserNotConfirmedException') {
+      // The error happens if the user didn't finish the confirmation step when signing up
+      // In this case you need to resend the code and confirm the user
+      // About how to resend the code and confirm the user, please check the signUp part
+    } else if (error.code === 'PasswordResetRequiredException') {
+      // The error happens when the password is reset in the Cognito console
+      // In this case you need to call forgotPassword to reset the password
+      // Please check the Forgot Password part.
+    } else if (error.code === 'NotAuthorizedException') {
+      // The error happens when the incorrect password is provided
+    } else if (error.code === 'UserNotFoundException') {
+      // The error happens when the supplied username/email does not exist in the Cognito user pool
+    }
+    yield put(signInFailure(error.message));
+  }
+}
+
+export function* onSignInStart() {
+  yield takeLatest(
+    AuthenticationActionTypes.EMAIL_SIGN_IN_START,
+    signInWithEmail
+  );
+}
+
 export function* authenticationSagas() {
   yield all([
     call(onSignUpStart),
     call(onVerifyEmailAddressStart),
-    call(onResendVerificationEmailStart)
+    call(onResendVerificationEmailStart),
+    call(onSignInStart)
   ]);
 }

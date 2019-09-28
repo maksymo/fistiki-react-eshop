@@ -17,6 +17,7 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
     case AuthenticationActionTypes.SIGN_UP_START:
     case AuthenticationActionTypes.VERIFY_EMAIL_START:
     case AuthenticationActionTypes.RESEND_VERIFICATION_EMAIL_START:
+    case AuthenticationActionTypes.SIGN_IN_START:
       return {
         ...state,
         loading: true,
@@ -41,9 +42,17 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false
       };
+    case AuthenticationActionTypes.SIGN_IN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentUser: action.payload,
+        activeComponent: 'SIGN_IN'
+      };
     case AuthenticationActionTypes.SIGN_UP_FAILURE:
     case AuthenticationActionTypes.VERIFY_EMAIL_FAILURE:
     case AuthenticationActionTypes.RESEND_VERIFICATION_EMAIL_FAILURE:
+    case AuthenticationActionTypes.SIGN_IN_FAILURE:
       return {
         ...state,
         loading: false,

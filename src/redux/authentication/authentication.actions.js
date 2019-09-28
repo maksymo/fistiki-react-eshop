@@ -48,3 +48,18 @@ export const resendVerificationEmailFailure = error => ({
   type: AuthenticationActionTypes.RESEND_VERIFICATION_EMAIL_FAILURE,
   payload: error
 });
+
+export const signInStart = userData => ({
+  type: AuthenticationActionTypes.EMAIL_SIGN_IN_START,
+  payload: userData
+});
+
+export const signInSuccess = username => ({
+  type: AuthenticationActionTypes.SIGN_IN_SUCCESS,
+  payload: username
+});
+
+export const signInFailure = error => ({
+  type: AuthenticationActionTypes.SIGN_IN_FAILURE,
+  payload: error
+});
