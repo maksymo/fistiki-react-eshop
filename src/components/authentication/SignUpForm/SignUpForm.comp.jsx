@@ -1,17 +1,25 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { createStructuredSelector } from 'reselect';
 
 import {
   setActiveComponent,
-  signUpStart
+  signUpStart,
+  setSnackbarHidden
 } from '../../../redux/authentication/authentication.actions';
+import {
+  selectSnackbarStatus,
+  selectSnackbarMsg,
+  selectSnackbarVariant
+} from '../../../redux/authentication/authentication.selectors';
 
 import { SignUpContainer } from './SignUpForm.styles';
 import { ActionButtonsContainer } from '../../../App.styles';
 
 import { Button } from '@material-ui/core';
 import CustomTextField from '../../common/CustomTextField/CustomTextField.comp';
+import CustomSnackbar from '../../common/CustomSnackbar/CustomSnackbar.comp';
 
 import {
   isRequired,
@@ -21,7 +29,15 @@ import {
   passwordMatch
 } from '../../../utils/validation';
 
-const SignIn = ({ setActiveComponent, signUpStart, valid }) => {
+const SignUp = ({
+  setActiveComponent,
+  signUpStart,
+  snackbarStatus,
+  snackbarMsg,
+  snackbarVariant,
+  setSnackbarHidden,
+  valid
+}) => {
   const [userData, setUserData] = useState({
     email: '',
     password: '',
@@ -110,16 +126,29 @@ const SignIn = ({ setActiveComponent, signUpStart, valid }) => {
           </Button>
         </ActionButtonsContainer>
       </form>
+      <CustomSnackbar
+        status={snackbarStatus}
+        variant={snackbarVariant}
+        msg={snackbarMsg}
+        handleClose={setSnackbarHidden}
+      />
     </SignUpContainer>
   );
 };
 
+const mapStateToProps = createStructuredSelector({
+  snackbarStatus: selectSnackbarStatus,
+  snackbarMsg: selectSnackbarMsg,
+  snackbarVariant: selectSnackbarVariant
+});
+
 const mapActionsToProps = dispatch => ({
   setActiveComponent: component => dispatch(setActiveComponent(component)),
-  signUpStart: userData => dispatch(signUpStart(userData))
+  signUpStart: userData => dispatch(signUpStart(userData)),
+  setSnackbarHidden: () => dispatch(setSnackbarHidden())
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapActionsToProps
-)(reduxForm({ form: 'SignUpForm' })(SignIn));
+)(reduxForm({ form: 'SignUpForm' })(SignUp));

@@ -42,14 +42,18 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         currentUser: { username: action.payload },
-        activeComponent: 'SIGN_IN'
+        activeComponent: 'SIGN_IN',
+        snackbarStatus: true,
+        snackbarMsg: 'Your e-mail is verified!',
+        snackbarVariant: 'success'
       };
     case AuthenticationActionTypes.RESEND_VERIFICATION_EMAIL_SUCCESS:
       return {
         ...state,
         loading: false,
         snackbarStatus: true,
-        snackbarMsg: 'Your e-mail is verified!',
+        snackbarMsg:
+          'A new verification code has been sent to your e-mail address',
         snackbarVariant: 'success'
       };
     case AuthenticationActionTypes.SIGN_IN_SUCCESS:

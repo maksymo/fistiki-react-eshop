@@ -1,39 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Field, reduxForm } from 'redux-form';
 
 import {
   setActiveComponent,
   verifyEmailAddressStart,
-  resendVerificationEmailStart
+  resendVerificationEmailStart,
+  setSnackbarHidden
 } from '../../../redux/authentication/authentication.actions';
 
-import { selectCurrentUser } from '../../../redux/authentication/authentication.selectors';
+import {
+  selectCurrentUser,
+  selectSnackbarStatus,
+  selectSnackbarMsg,
+  selectSnackbarVariant
+} from '../../../redux/authentication/authentication.selectors';
 
 import {
   VerifySignUpContainer,
-  InputField,
   ResendVerificationEmailText
 } from './VerifySignUp.styles';
 import { ActionButtonsContainer } from '../../../App.styles';
 
 import { useTheme } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
+import CustomSnackbar from '../../common/CustomSnackbar/CustomSnackbar.comp';
+import CustomTextField from '../../common/CustomTextField/CustomTextField.comp';
+
+import { isRequired } from '../../../utils/validation';
 
 const SignIn = ({
   setActiveComponent,
   currentUser,
   verifyEmailAddressStart,
-  resendVerificationEmailStart
+  resendVerificationEmailStart,
+  snackbarStatus,
+  snackbarMsg,
+  snackbarVariant,
+  setSnackbarHidden,
+  valid
 }) => {
   const [verificationCode, setVerificationCode] = useState('');
 
+  const codeRef = useRef(null);
+
   const handleSubmit = event => {
     event.preventDefault();
-    verifyEmailAddressStart({
-      code: verificationCode,
-      username: currentUser.username
-    });
+    codeRef.current.ref.current.handleBlur();
+    if (valid) {
+      verifyEmailAddressStart({
+        code: verificationCode,
+        username: currentUser.username
+      });
+    }
   };
 
   const handleInputChange = event => {
@@ -44,13 +64,18 @@ const SignIn = ({
   return (
     <VerifySignUpContainer>
       <form onSubmit={handleSubmit}>
-        <InputField
+        <Field
+          ref={codeRef}
+          component={CustomTextField}
+          fullWidth
           onChange={handleInputChange}
           label="Verification Code"
           type="text"
           name="verificationCode"
+          value={verificationCode}
           margin="normal"
           variant="outlined"
+          validate={[isRequired]}
         />
         <ResendVerificationEmailText
           color={theme.palette.primary.main}
@@ -63,7 +88,7 @@ const SignIn = ({
             variant="contained"
             size="large"
             color="primary"
-            onClick={handleSubmit}
+            type="submit"
           >
             Submit
           </Button>
@@ -76,12 +101,21 @@ const SignIn = ({
           </Button>
         </ActionButtonsContainer>
       </form>
+      <CustomSnackbar
+        status={snackbarStatus}
+        variant={snackbarVariant}
+        msg={snackbarMsg}
+        handleClose={setSnackbarHidden}
+      />
     </VerifySignUpContainer>
   );
 };
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  snackbarStatus: selectSnackbarStatus,
+  snackbarMsg: selectSnackbarMsg,
+  snackbarVariant: selectSnackbarVariant
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -89,10 +123,11 @@ const mapDispatchToProps = dispatch => ({
   verifyEmailAddressStart: verificationData =>
     dispatch(verifyEmailAddressStart(verificationData)),
   resendVerificationEmailStart: username =>
-    dispatch(resendVerificationEmailStart(username))
+    dispatch(resendVerificationEmailStart(username)),
+  setSnackbarHidden: () => dispatch(setSnackbarHidden())
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignIn);
+)(reduxForm({ form: 'VerifySignUpForm' })(SignIn));
