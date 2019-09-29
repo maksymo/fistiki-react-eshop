@@ -21,13 +21,7 @@ import {
   passwordMatch
 } from '../../../utils/validation';
 
-const SignIn = ({
-  setActiveComponent,
-  signUpStart,
-  pristine,
-  submitting,
-  valid
-}) => {
+const SignIn = ({ setActiveComponent, signUpStart, valid }) => {
   const [userData, setUserData] = useState({
     email: '',
     password: '',

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Field, reduxForm } from 'redux-form';
 
 import {
   setActiveComponent,
@@ -13,16 +14,15 @@ import {
   selectSnackbarVariant
 } from '../../../redux/authentication/authentication.selectors';
 
-import {
-  SignInContainer,
-  InputField,
-  ForgotPasswordText
-} from './SignInForm.styles';
+import { SignInContainer, ForgotPasswordText } from './SignInForm.styles';
 import { ActionButtonsContainer } from '../../../App.styles';
 
 import { Button } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 import CustomSnackbar from '../../common/CustomSnackbar/CustomSnackbar.comp';
+import CustomTextField from '../../common/CustomTextField/CustomTextField.comp';
+
+import { isRequired, isEmail } from '../../../utils/validation';
 
 const SignIn = ({
   setActiveComponent,
@@ -30,17 +30,23 @@ const SignIn = ({
   snackbarStatus,
   snackbarMsg,
   snackbarVariant,
-  setSnackbarHidden
+  setSnackbarHidden,
+  valid
 }) => {
   const [userData, setUserData] = useState({
-    username: '',
+    email: '',
     password: ''
   });
-  const { username, password } = userData;
+  const { email, password } = userData;
+
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
   const handleSubmit = event => {
     event.preventDefault();
-    signInStart(userData);
+    emailRef.current.ref.current.handleBlur();
+    passwordRef.current.ref.current.handleBlur();
+    if (valid) signInStart({ username: email, password });
   };
 
   const handleInputChange = event => {
@@ -56,17 +62,24 @@ const SignIn = ({
   return (
     <SignInContainer>
       <form onSubmit={handleSubmit}>
-        <InputField
+        <Field
+          ref={emailRef}
+          component={CustomTextField}
+          fullWidth
           onChange={handleInputChange}
           label="Email"
           type="email"
-          name="username"
-          value={username}
+          name="email"
+          value={email}
           autoComplete="email"
           margin="normal"
           variant="outlined"
+          validate={[isRequired, isEmail]}
         />
-        <InputField
+        <Field
+          ref={passwordRef}
+          component={CustomTextField}
+          fullWidth
           onChange={handleInputChange}
           label="Password"
           type="password"
@@ -75,6 +88,7 @@ const SignIn = ({
           autoComplete="password"
           margin="normal"
           variant="outlined"
+          validate={[isRequired]}
         />
         <ForgotPasswordText
           color={theme.palette.primary.main}
@@ -126,4 +140,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignIn);
+)(reduxForm({ form: 'SignInForm' })(SignIn));
