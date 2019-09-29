@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import {
   setActiveComponent,
-  signInStart
+  signInStart,
+  setSnackbarHidden
 } from '../../../redux/authentication/authentication.actions';
+import {
+  selectSnackbarStatus,
+  selectSnackbarMsg,
+  selectSnackbarVariant
+} from '../../../redux/authentication/authentication.selectors';
 
 import {
   SignInContainer,
@@ -15,8 +22,16 @@ import { ActionButtonsContainer } from '../../../App.styles';
 
 import { Button } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
+import CustomSnackbar from '../../common/CustomSnackbar/CustomSnackbar.comp';
 
-const SignIn = ({ setActiveComponent, signInStart }) => {
+const SignIn = ({
+  setActiveComponent,
+  signInStart,
+  snackbarStatus,
+  snackbarMsg,
+  snackbarVariant,
+  setSnackbarHidden
+}) => {
   const [userData, setUserData] = useState({
     username: '',
     password: ''
@@ -86,16 +101,29 @@ const SignIn = ({ setActiveComponent, signInStart }) => {
           </Button>
         </ActionButtonsContainer>
       </form>
+      <CustomSnackbar
+        status={snackbarStatus}
+        variant={snackbarVariant}
+        msg={snackbarMsg}
+        handleClose={setSnackbarHidden}
+      />
     </SignInContainer>
   );
 };
 
-const mapActionsToProps = dispatch => ({
+const mapStateToProps = createStructuredSelector({
+  snackbarStatus: selectSnackbarStatus,
+  snackbarMsg: selectSnackbarMsg,
+  snackbarVariant: selectSnackbarVariant
+});
+
+const mapDispatchToProps = dispatch => ({
   setActiveComponent: component => dispatch(setActiveComponent(component)),
-  signInStart: userData => dispatch(signInStart(userData))
+  signInStart: userData => dispatch(signInStart(userData)),
+  setSnackbarHidden: () => dispatch(setSnackbarHidden())
 });
 
 export default connect(
-  null,
-  mapActionsToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(SignIn);

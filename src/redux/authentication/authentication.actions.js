@@ -5,6 +5,10 @@ export const setActiveComponent = component => ({
   payload: component
 });
 
+export const setSnackbarHidden = () => ({
+  type: AuthenticationActionTypes.SET_SNACKBAR_HIDDEN
+});
+
 export const signUpStart = userData => ({
   type: AuthenticationActionTypes.SIGN_UP_START,
   payload: userData

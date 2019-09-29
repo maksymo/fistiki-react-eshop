@@ -4,7 +4,9 @@ const INITIAL_STATE = {
   currentUser: null,
   activeComponent: 'SIGN_IN',
   loading: false,
-  errorMsg: null
+  snackbarStatus: false,
+  snackbarMsg: null,
+  snackbarVariant: 'info'
 };
 
 const authenticationReducer = (state = INITIAL_STATE, action) => {
@@ -14,6 +16,11 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
         ...state,
         activeComponent: action.payload
       };
+    case AuthenticationActionTypes.SET_SNACKBAR_HIDDEN:
+      return {
+        ...state,
+        snackbarStatus: false
+      };
     case AuthenticationActionTypes.SIGN_UP_START:
     case AuthenticationActionTypes.VERIFY_EMAIL_START:
     case AuthenticationActionTypes.RESEND_VERIFICATION_EMAIL_START:
@@ -21,7 +28,7 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: true,
-        errorMsg: null
+        snackbarMsg: null
       };
     case AuthenticationActionTypes.SIGN_UP_SUCCESS:
       return {
@@ -40,23 +47,36 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
     case AuthenticationActionTypes.RESEND_VERIFICATION_EMAIL_SUCCESS:
       return {
         ...state,
-        loading: false
+        loading: false,
+        snackbarStatus: true,
+        snackbarMsg: 'Your e-mail is verified!',
+        snackbarVariant: 'success'
       };
     case AuthenticationActionTypes.SIGN_IN_SUCCESS:
       return {
         ...state,
         loading: false,
         currentUser: action.payload,
-        activeComponent: 'SIGN_IN'
+        activeComponent: 'SIGN_IN',
+        snackbarStatus: true,
+        snackbarMsg: 'Your have signed in!',
+        snackbarVariant: 'success'
       };
     case AuthenticationActionTypes.SIGN_UP_FAILURE:
     case AuthenticationActionTypes.VERIFY_EMAIL_FAILURE:
     case AuthenticationActionTypes.RESEND_VERIFICATION_EMAIL_FAILURE:
     case AuthenticationActionTypes.SIGN_IN_FAILURE:
+      let errorMsg = action.payload;
+      if (errorMsg.includes('username'))
+        errorMsg = errorMsg.replace('username', 'e-mail');
+      if (errorMsg.includes('Username'))
+        errorMsg = errorMsg.replace('Username', 'E-mail');
       return {
         ...state,
         loading: false,
-        errorMsg: action.payload
+        snackbarStatus: true,
+        snackbarMsg: errorMsg,
+        snackbarVariant: 'error'
       };
     default:
       return state;
