@@ -72,7 +72,7 @@ const SignIn = ({ setActiveComponent, signInStart }) => {
             variant="contained"
             size="large"
             color="primary"
-            onClick={handleSubmit}
+            type="submit"
           >
             Sign In
           </Button>

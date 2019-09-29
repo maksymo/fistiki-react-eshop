@@ -1,17 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
 
 import {
   setActiveComponent,
   signUpStart
 } from '../../../redux/authentication/authentication.actions';
 
-import { SignUpContainer, InputField } from './SignUpForm.styles';
+import { SignUpContainer } from './SignUpForm.styles';
 import { ActionButtonsContainer } from '../../../App.styles';
 
 import { Button } from '@material-ui/core';
+import CustomTextField from '../../common/CustomTextField/CustomTextField.comp';
 
-const SignIn = ({ setActiveComponent, signUpStart }) => {
+import {
+  isRequired,
+  isEmail,
+  minLength8,
+  maxLength64,
+  passwordMatch
+} from '../../../utils/validation';
+
+const SignIn = ({
+  setActiveComponent,
+  signUpStart,
+  pristine,
+  submitting,
+  valid
+}) => {
   const [userData, setUserData] = useState({
     email: '',
     password: '',
@@ -20,9 +36,16 @@ const SignIn = ({ setActiveComponent, signUpStart }) => {
 
   const { email, password, confirmPassword } = userData;
 
-  const handleSubmit = event => {
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const confirmPasswordRef = useRef(null);
+
+  const handleSubmit = async event => {
     event.preventDefault();
-    signUpStart({ email, password });
+    emailRef.current.ref.current.handleBlur();
+    passwordRef.current.ref.current.handleBlur();
+    confirmPasswordRef.current.ref.current.handleBlur();
+    if (valid) signUpStart({ email, password });
   };
 
   const handleInputChange = event => {
@@ -33,7 +56,10 @@ const SignIn = ({ setActiveComponent, signUpStart }) => {
   return (
     <SignUpContainer>
       <form onSubmit={handleSubmit}>
-        <InputField
+        <Field
+          ref={emailRef}
+          component={CustomTextField}
+          fullWidth
           onChange={handleInputChange}
           label="Email"
           type="email"
@@ -42,8 +68,12 @@ const SignIn = ({ setActiveComponent, signUpStart }) => {
           autoComplete="email"
           margin="normal"
           variant="outlined"
+          validate={[isRequired, isEmail]}
         />
-        <InputField
+        <Field
+          ref={passwordRef}
+          component={CustomTextField}
+          fullWidth
           onChange={handleInputChange}
           label="Password"
           type="password"
@@ -52,8 +82,12 @@ const SignIn = ({ setActiveComponent, signUpStart }) => {
           autoComplete="password"
           margin="normal"
           variant="outlined"
+          validate={[isRequired, minLength8, maxLength64]}
         />
-        <InputField
+        <Field
+          ref={confirmPasswordRef}
+          component={CustomTextField}
+          fullWidth
           onChange={handleInputChange}
           label="Confirm Password"
           type="password"
@@ -62,13 +96,14 @@ const SignIn = ({ setActiveComponent, signUpStart }) => {
           autoComplete="confirmPassword"
           margin="normal"
           variant="outlined"
+          validate={[isRequired, minLength8, maxLength64, passwordMatch]}
         />
         <ActionButtonsContainer>
           <Button
             variant="contained"
             size="large"
             color="primary"
-            onClick={handleSubmit}
+            type="submit"
           >
             Create Account
           </Button>
@@ -93,4 +128,4 @@ const mapActionsToProps = dispatch => ({
 export default connect(
   null,
   mapActionsToProps
-)(SignIn);
+)(reduxForm({ form: 'SignUpForm' })(SignIn));

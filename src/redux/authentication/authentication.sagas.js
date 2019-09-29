@@ -33,7 +33,6 @@ export function* onSignUpStart() {
 
 export function* verifyEmail({ payload: { username, code } }) {
   try {
-    console.log(`verifyEmail data: ${username}`);
     const data = yield Auth.confirmSignUp(username, code);
     yield put(verifyEmailAddressSuccess(data));
   } catch (error) {
