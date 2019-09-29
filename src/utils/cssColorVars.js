@@ -17,6 +17,8 @@ export default {
     main: '#494949',
     dark: '#404040'
   },
+  disabled: 'rgba(172, 199, 141, 0.7)',
+  disabledBackground: 'rgba(172, 199, 141, 0.3)',
   white: '#fff',
   greyDark4: '#424242',
   greyDark3: '#616161',

@@ -11,7 +11,8 @@ import {
 import {
   selectSnackbarStatus,
   selectSnackbarMsg,
-  selectSnackbarVariant
+  selectSnackbarVariant,
+  selectLoadingStatus
 } from '../../../redux/authentication/authentication.selectors';
 
 import { SignInContainer, ForgotPasswordText } from './SignInForm.styles';
@@ -22,10 +23,14 @@ import { useTheme } from '@material-ui/styles';
 import CustomSnackbar from '../../common/CustomSnackbar/CustomSnackbar.comp';
 import CustomTextField from '../../common/CustomTextField/CustomTextField.comp';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+
 import { isRequired, isEmail } from '../../../utils/validation';
 
 const SignIn = ({
   setActiveComponent,
+  selectLoadingStatus,
   signInStart,
   snackbarStatus,
   snackbarMsg,
@@ -74,6 +79,7 @@ const SignIn = ({
           autoComplete="email"
           margin="normal"
           variant="outlined"
+          disabled={selectLoadingStatus}
           validate={[isRequired, isEmail]}
         />
         <Field
@@ -88,9 +94,11 @@ const SignIn = ({
           autoComplete="password"
           margin="normal"
           variant="outlined"
+          disabled={selectLoadingStatus}
           validate={[isRequired]}
         />
         <ForgotPasswordText
+          disabled={selectLoadingStatus}
           color={theme.palette.primary.main}
           onClick={() => setActiveComponent('FORGOT_PASSWORD')}
         >
@@ -102,13 +110,19 @@ const SignIn = ({
             size="large"
             color="primary"
             type="submit"
+            disabled={selectLoadingStatus}
           >
-            Sign In
+            {selectLoadingStatus ? (
+              <FontAwesomeIcon icon={faSpinner} spin />
+            ) : (
+              'Sign In'
+            )}
           </Button>
           <Button
             mx={2}
             size="large"
             color="primary"
+            disabled={selectLoadingStatus}
             onClick={() => setActiveComponent('SIGN_UP')}
           >
             Create Account
@@ -128,7 +142,8 @@ const SignIn = ({
 const mapStateToProps = createStructuredSelector({
   snackbarStatus: selectSnackbarStatus,
   snackbarMsg: selectSnackbarMsg,
-  snackbarVariant: selectSnackbarVariant
+  snackbarVariant: selectSnackbarVariant,
+  selectLoadingStatus: selectLoadingStatus
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -27,7 +27,11 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: colorVars.primary,
-    secondary: colorVars.secondary
+    secondary: colorVars.secondary,
+    action: {
+      disabled: colorVars.disabled,
+      disabledBackground: colorVars.disabledBackground
+    }
   },
   spacing: 8,
   shape: {

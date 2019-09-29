@@ -24,7 +24,7 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
     case AuthenticationActionTypes.SIGN_UP_START:
     case AuthenticationActionTypes.VERIFY_EMAIL_START:
     case AuthenticationActionTypes.RESEND_VERIFICATION_EMAIL_START:
-    case AuthenticationActionTypes.SIGN_IN_START:
+    case AuthenticationActionTypes.EMAIL_SIGN_IN_START:
       return {
         ...state,
         loading: true,

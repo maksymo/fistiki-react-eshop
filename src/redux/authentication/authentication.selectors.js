@@ -26,3 +26,8 @@ export const selectSnackbarVariant = createSelector(
   [selectAuthentication],
   authentication => authentication.snackbarVariant
 );
+
+export const selectLoadingStatus = createSelector(
+  [selectAuthentication],
+  authentication => authentication.loading
+);
