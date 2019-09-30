@@ -1,4 +1,11 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+import {
+  selectCurrentUser,
+  selectCurrentUserLoadingStatus
+} from '../../../redux/authentication/authentication.selectors';
 
 import {
   MenuButtonContainer,
@@ -14,14 +21,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars,
   faUser,
-  faShoppingBag
+  faShoppingBag,
+  faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 
 import CartPopover from '../CartPopover/CartPopover.comp';
 import ProfilePopover from '../ProfilePopover/ProfilePopover.comp';
 import MenuPopover from '../MenuPopover/MenuPopover.comp';
 
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, currentUserLoading }) => {
   const classes = useStyles();
   const [cartPopoverAnchorEl, setCartPopoverAnchorEl] = useState(null);
   const [profilePopoverAnchorEl, setProfilePopoverAnchorEl] = useState(null);
@@ -94,7 +102,15 @@ const Header = ({ currentUser }) => {
             </Grid>
             <Grid item className={classes.toolbarButtons}>
               <GreetingContainer>
-                Hello, {currentUser ? currentUser.name : 'Guest'}!
+                Hello,{' '}
+                {currentUserLoading ? (
+                  <FontAwesomeIcon icon={faSpinner} spin />
+                ) : currentUser ? (
+                  currentUser.attributes.email
+                ) : (
+                  'Guest'
+                )}
+                !
               </GreetingContainer>
               <IconButton
                 aria-label="user"
@@ -141,4 +157,9 @@ const Header = ({ currentUser }) => {
   );
 };
 
-export default Header;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  currentUserLoading: selectCurrentUserLoadingStatus
+});
+
+export default connect(mapStateToProps)(Header);

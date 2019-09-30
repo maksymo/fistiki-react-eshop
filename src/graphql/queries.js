@@ -1,11 +1,76 @@
 // eslint-disable
 // this is an auto generated file. This will be overwritten
 
+export const getUser = `query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    firstName
+    lastName
+    email
+    address1
+    address2
+    city
+    state
+    zipCode
+    country
+    tel
+    orders {
+      items {
+        id
+        firstName
+        lastName
+        address1
+        address2
+        city
+        state
+        zipCode
+        country
+        tel
+        shippingMethod
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const listUsers = `query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      firstName
+      lastName
+      email
+      address1
+      address2
+      city
+      state
+      zipCode
+      country
+      tel
+      orders {
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+`;
 export const getProduct = `query GetProduct($id: ID!) {
   getProduct(id: $id) {
     id
     seo
-    category
+    category {
+      id
+      seo
+      name
+      products {
+        nextToken
+      }
+    }
     name
     shortDescription
     description
@@ -25,8 +90,6 @@ export const getProduct = `query GetProduct($id: ID!) {
     weightUnit
     unit
     active
-    createdAt
-    updatedAt
   }
 }
 `;
@@ -39,7 +102,11 @@ export const listProducts = `query ListProducts(
     items {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -55,8 +122,51 @@ export const listProducts = `query ListProducts(
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
+    }
+    nextToken
+  }
+}
+`;
+export const getCategory = `query GetCategory($id: ID!) {
+  getCategory(id: $id) {
+    id
+    seo
+    name
+    products {
+      items {
+        id
+        seo
+        name
+        shortDescription
+        description
+        price
+        discount
+        productCode
+        stock
+        container
+        weight
+        weightUnit
+        unit
+        active
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const listCategorys = `query ListCategorys(
+  $filter: ModelCategoryFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCategorys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      seo
+      name
+      products {
+        nextToken
+      }
     }
     nextToken
   }
@@ -67,9 +177,6 @@ export const getOrder = `query GetOrder($id: ID!) {
     id
     firstName
     lastName
-    email
-    shippingFirstName
-    shippingLastName
     address1
     address2
     city
@@ -81,7 +188,11 @@ export const getOrder = `query GetOrder($id: ID!) {
     products {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -97,11 +208,23 @@ export const getOrder = `query GetOrder($id: ID!) {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
-    createdAt
-    updatedAt
+    user {
+      id
+      firstName
+      lastName
+      email
+      address1
+      address2
+      city
+      state
+      zipCode
+      country
+      tel
+      orders {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -115,9 +238,6 @@ export const listOrders = `query ListOrders(
       id
       firstName
       lastName
-      email
-      shippingFirstName
-      shippingLastName
       address1
       address2
       city
@@ -129,7 +249,6 @@ export const listOrders = `query ListOrders(
       products {
         id
         seo
-        category
         name
         shortDescription
         description
@@ -142,11 +261,20 @@ export const listOrders = `query ListOrders(
         weightUnit
         unit
         active
-        createdAt
-        updatedAt
       }
-      createdAt
-      updatedAt
+      user {
+        id
+        firstName
+        lastName
+        email
+        address1
+        address2
+        city
+        state
+        zipCode
+        country
+        tel
+      }
     }
     nextToken
   }
@@ -158,7 +286,11 @@ export const getImage = `query GetImage($id: ID!) {
     product {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -174,8 +306,6 @@ export const getImage = `query GetImage($id: ID!) {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
     bucket
     fullsize {
@@ -202,7 +332,6 @@ export const listImages = `query ListImages(
       product {
         id
         seo
-        category
         name
         shortDescription
         description
@@ -215,8 +344,6 @@ export const listImages = `query ListImages(
         weightUnit
         unit
         active
-        createdAt
-        updatedAt
       }
       bucket
       fullsize {

@@ -1,11 +1,114 @@
 // eslint-disable
 // this is an auto generated file. This will be overwritten
 
+export const onCreateUser = `subscription OnCreateUser {
+  onCreateUser {
+    id
+    firstName
+    lastName
+    email
+    address1
+    address2
+    city
+    state
+    zipCode
+    country
+    tel
+    orders {
+      items {
+        id
+        firstName
+        lastName
+        address1
+        address2
+        city
+        state
+        zipCode
+        country
+        tel
+        shippingMethod
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const onUpdateUser = `subscription OnUpdateUser {
+  onUpdateUser {
+    id
+    firstName
+    lastName
+    email
+    address1
+    address2
+    city
+    state
+    zipCode
+    country
+    tel
+    orders {
+      items {
+        id
+        firstName
+        lastName
+        address1
+        address2
+        city
+        state
+        zipCode
+        country
+        tel
+        shippingMethod
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const onDeleteUser = `subscription OnDeleteUser {
+  onDeleteUser {
+    id
+    firstName
+    lastName
+    email
+    address1
+    address2
+    city
+    state
+    zipCode
+    country
+    tel
+    orders {
+      items {
+        id
+        firstName
+        lastName
+        address1
+        address2
+        city
+        state
+        zipCode
+        country
+        tel
+        shippingMethod
+      }
+      nextToken
+    }
+  }
+}
+`;
 export const onCreateProduct = `subscription OnCreateProduct {
   onCreateProduct {
     id
     seo
-    category
+    category {
+      id
+      seo
+      name
+      products {
+        nextToken
+      }
+    }
     name
     shortDescription
     description
@@ -25,8 +128,6 @@ export const onCreateProduct = `subscription OnCreateProduct {
     weightUnit
     unit
     active
-    createdAt
-    updatedAt
   }
 }
 `;
@@ -34,7 +135,14 @@ export const onUpdateProduct = `subscription OnUpdateProduct {
   onUpdateProduct {
     id
     seo
-    category
+    category {
+      id
+      seo
+      name
+      products {
+        nextToken
+      }
+    }
     name
     shortDescription
     description
@@ -54,8 +162,6 @@ export const onUpdateProduct = `subscription OnUpdateProduct {
     weightUnit
     unit
     active
-    createdAt
-    updatedAt
   }
 }
 `;
@@ -63,7 +169,14 @@ export const onDeleteProduct = `subscription OnDeleteProduct {
   onDeleteProduct {
     id
     seo
-    category
+    category {
+      id
+      seo
+      name
+      products {
+        nextToken
+      }
+    }
     name
     shortDescription
     description
@@ -83,8 +196,87 @@ export const onDeleteProduct = `subscription OnDeleteProduct {
     weightUnit
     unit
     active
-    createdAt
-    updatedAt
+  }
+}
+`;
+export const onCreateCategory = `subscription OnCreateCategory {
+  onCreateCategory {
+    id
+    seo
+    name
+    products {
+      items {
+        id
+        seo
+        name
+        shortDescription
+        description
+        price
+        discount
+        productCode
+        stock
+        container
+        weight
+        weightUnit
+        unit
+        active
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const onUpdateCategory = `subscription OnUpdateCategory {
+  onUpdateCategory {
+    id
+    seo
+    name
+    products {
+      items {
+        id
+        seo
+        name
+        shortDescription
+        description
+        price
+        discount
+        productCode
+        stock
+        container
+        weight
+        weightUnit
+        unit
+        active
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const onDeleteCategory = `subscription OnDeleteCategory {
+  onDeleteCategory {
+    id
+    seo
+    name
+    products {
+      items {
+        id
+        seo
+        name
+        shortDescription
+        description
+        price
+        discount
+        productCode
+        stock
+        container
+        weight
+        weightUnit
+        unit
+        active
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -93,9 +285,6 @@ export const onCreateOrder = `subscription OnCreateOrder {
     id
     firstName
     lastName
-    email
-    shippingFirstName
-    shippingLastName
     address1
     address2
     city
@@ -107,7 +296,11 @@ export const onCreateOrder = `subscription OnCreateOrder {
     products {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -123,11 +316,23 @@ export const onCreateOrder = `subscription OnCreateOrder {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
-    createdAt
-    updatedAt
+    user {
+      id
+      firstName
+      lastName
+      email
+      address1
+      address2
+      city
+      state
+      zipCode
+      country
+      tel
+      orders {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -136,9 +341,6 @@ export const onUpdateOrder = `subscription OnUpdateOrder {
     id
     firstName
     lastName
-    email
-    shippingFirstName
-    shippingLastName
     address1
     address2
     city
@@ -150,7 +352,11 @@ export const onUpdateOrder = `subscription OnUpdateOrder {
     products {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -166,11 +372,23 @@ export const onUpdateOrder = `subscription OnUpdateOrder {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
-    createdAt
-    updatedAt
+    user {
+      id
+      firstName
+      lastName
+      email
+      address1
+      address2
+      city
+      state
+      zipCode
+      country
+      tel
+      orders {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -179,9 +397,6 @@ export const onDeleteOrder = `subscription OnDeleteOrder {
     id
     firstName
     lastName
-    email
-    shippingFirstName
-    shippingLastName
     address1
     address2
     city
@@ -193,7 +408,11 @@ export const onDeleteOrder = `subscription OnDeleteOrder {
     products {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -209,11 +428,23 @@ export const onDeleteOrder = `subscription OnDeleteOrder {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
-    createdAt
-    updatedAt
+    user {
+      id
+      firstName
+      lastName
+      email
+      address1
+      address2
+      city
+      state
+      zipCode
+      country
+      tel
+      orders {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -223,7 +454,11 @@ export const onCreateImage = `subscription OnCreateImage {
     product {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -239,8 +474,6 @@ export const onCreateImage = `subscription OnCreateImage {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
     bucket
     fullsize {
@@ -262,7 +495,11 @@ export const onUpdateImage = `subscription OnUpdateImage {
     product {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -278,8 +515,6 @@ export const onUpdateImage = `subscription OnUpdateImage {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
     bucket
     fullsize {
@@ -301,7 +536,11 @@ export const onDeleteImage = `subscription OnDeleteImage {
     product {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -317,8 +556,6 @@ export const onDeleteImage = `subscription OnDeleteImage {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
     bucket
     fullsize {

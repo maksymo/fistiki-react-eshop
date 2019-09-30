@@ -1,11 +1,114 @@
 // eslint-disable
 // this is an auto generated file. This will be overwritten
 
+export const createUser = `mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    id
+    firstName
+    lastName
+    email
+    address1
+    address2
+    city
+    state
+    zipCode
+    country
+    tel
+    orders {
+      items {
+        id
+        firstName
+        lastName
+        address1
+        address2
+        city
+        state
+        zipCode
+        country
+        tel
+        shippingMethod
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    id
+    firstName
+    lastName
+    email
+    address1
+    address2
+    city
+    state
+    zipCode
+    country
+    tel
+    orders {
+      items {
+        id
+        firstName
+        lastName
+        address1
+        address2
+        city
+        state
+        zipCode
+        country
+        tel
+        shippingMethod
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
+  deleteUser(input: $input) {
+    id
+    firstName
+    lastName
+    email
+    address1
+    address2
+    city
+    state
+    zipCode
+    country
+    tel
+    orders {
+      items {
+        id
+        firstName
+        lastName
+        address1
+        address2
+        city
+        state
+        zipCode
+        country
+        tel
+        shippingMethod
+      }
+      nextToken
+    }
+  }
+}
+`;
 export const createProduct = `mutation CreateProduct($input: CreateProductInput!) {
   createProduct(input: $input) {
     id
     seo
-    category
+    category {
+      id
+      seo
+      name
+      products {
+        nextToken
+      }
+    }
     name
     shortDescription
     description
@@ -25,8 +128,6 @@ export const createProduct = `mutation CreateProduct($input: CreateProductInput!
     weightUnit
     unit
     active
-    createdAt
-    updatedAt
   }
 }
 `;
@@ -34,7 +135,14 @@ export const updateProduct = `mutation UpdateProduct($input: UpdateProductInput!
   updateProduct(input: $input) {
     id
     seo
-    category
+    category {
+      id
+      seo
+      name
+      products {
+        nextToken
+      }
+    }
     name
     shortDescription
     description
@@ -54,8 +162,6 @@ export const updateProduct = `mutation UpdateProduct($input: UpdateProductInput!
     weightUnit
     unit
     active
-    createdAt
-    updatedAt
   }
 }
 `;
@@ -63,7 +169,14 @@ export const deleteProduct = `mutation DeleteProduct($input: DeleteProductInput!
   deleteProduct(input: $input) {
     id
     seo
-    category
+    category {
+      id
+      seo
+      name
+      products {
+        nextToken
+      }
+    }
     name
     shortDescription
     description
@@ -83,8 +196,87 @@ export const deleteProduct = `mutation DeleteProduct($input: DeleteProductInput!
     weightUnit
     unit
     active
-    createdAt
-    updatedAt
+  }
+}
+`;
+export const createCategory = `mutation CreateCategory($input: CreateCategoryInput!) {
+  createCategory(input: $input) {
+    id
+    seo
+    name
+    products {
+      items {
+        id
+        seo
+        name
+        shortDescription
+        description
+        price
+        discount
+        productCode
+        stock
+        container
+        weight
+        weightUnit
+        unit
+        active
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const updateCategory = `mutation UpdateCategory($input: UpdateCategoryInput!) {
+  updateCategory(input: $input) {
+    id
+    seo
+    name
+    products {
+      items {
+        id
+        seo
+        name
+        shortDescription
+        description
+        price
+        discount
+        productCode
+        stock
+        container
+        weight
+        weightUnit
+        unit
+        active
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const deleteCategory = `mutation DeleteCategory($input: DeleteCategoryInput!) {
+  deleteCategory(input: $input) {
+    id
+    seo
+    name
+    products {
+      items {
+        id
+        seo
+        name
+        shortDescription
+        description
+        price
+        discount
+        productCode
+        stock
+        container
+        weight
+        weightUnit
+        unit
+        active
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -93,9 +285,6 @@ export const createOrder = `mutation CreateOrder($input: CreateOrderInput!) {
     id
     firstName
     lastName
-    email
-    shippingFirstName
-    shippingLastName
     address1
     address2
     city
@@ -107,7 +296,11 @@ export const createOrder = `mutation CreateOrder($input: CreateOrderInput!) {
     products {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -123,11 +316,23 @@ export const createOrder = `mutation CreateOrder($input: CreateOrderInput!) {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
-    createdAt
-    updatedAt
+    user {
+      id
+      firstName
+      lastName
+      email
+      address1
+      address2
+      city
+      state
+      zipCode
+      country
+      tel
+      orders {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -136,9 +341,6 @@ export const updateOrder = `mutation UpdateOrder($input: UpdateOrderInput!) {
     id
     firstName
     lastName
-    email
-    shippingFirstName
-    shippingLastName
     address1
     address2
     city
@@ -150,7 +352,11 @@ export const updateOrder = `mutation UpdateOrder($input: UpdateOrderInput!) {
     products {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -166,11 +372,23 @@ export const updateOrder = `mutation UpdateOrder($input: UpdateOrderInput!) {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
-    createdAt
-    updatedAt
+    user {
+      id
+      firstName
+      lastName
+      email
+      address1
+      address2
+      city
+      state
+      zipCode
+      country
+      tel
+      orders {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -179,9 +397,6 @@ export const deleteOrder = `mutation DeleteOrder($input: DeleteOrderInput!) {
     id
     firstName
     lastName
-    email
-    shippingFirstName
-    shippingLastName
     address1
     address2
     city
@@ -193,7 +408,11 @@ export const deleteOrder = `mutation DeleteOrder($input: DeleteOrderInput!) {
     products {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -209,11 +428,23 @@ export const deleteOrder = `mutation DeleteOrder($input: DeleteOrderInput!) {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
-    createdAt
-    updatedAt
+    user {
+      id
+      firstName
+      lastName
+      email
+      address1
+      address2
+      city
+      state
+      zipCode
+      country
+      tel
+      orders {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -223,7 +454,11 @@ export const createImage = `mutation CreateImage($input: CreateImageInput!) {
     product {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -239,8 +474,6 @@ export const createImage = `mutation CreateImage($input: CreateImageInput!) {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
     bucket
     fullsize {
@@ -262,7 +495,11 @@ export const updateImage = `mutation UpdateImage($input: UpdateImageInput!) {
     product {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -278,8 +515,6 @@ export const updateImage = `mutation UpdateImage($input: UpdateImageInput!) {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
     bucket
     fullsize {
@@ -301,7 +536,11 @@ export const deleteImage = `mutation DeleteImage($input: DeleteImageInput!) {
     product {
       id
       seo
-      category
+      category {
+        id
+        seo
+        name
+      }
       name
       shortDescription
       description
@@ -317,8 +556,6 @@ export const deleteImage = `mutation DeleteImage($input: DeleteImageInput!) {
       weightUnit
       unit
       active
-      createdAt
-      updatedAt
     }
     bucket
     fullsize {

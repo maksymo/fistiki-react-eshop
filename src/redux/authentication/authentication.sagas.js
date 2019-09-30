@@ -11,7 +11,11 @@ import {
   resendVerificationEmailSuccess,
   resendVerificationEmailFailure,
   signInSuccess,
-  signInFailure
+  signInFailure,
+  getCurrentAuthenticatedUserSuccess,
+  getCurrentAuthenticatedUserFailure,
+  signOutSuccess,
+  signOutFailure
 } from './authentication.actions';
 
 export function* signUp({ payload: { email, password } }) {
@@ -102,11 +106,43 @@ export function* onSignInStart() {
   );
 }
 
+export function* getAuthenticatedUser() {
+  try {
+    const user = yield Auth.currentAuthenticatedUser();
+    yield put(getCurrentAuthenticatedUserSuccess(user));
+  } catch (error) {
+    yield put(getCurrentAuthenticatedUserFailure(error.message));
+  }
+}
+
+export function* onGetAuthenticatedUserStart() {
+  yield takeLatest(
+    AuthenticationActionTypes.GET_AUTHENTICATED_USER_START,
+    getAuthenticatedUser
+  );
+}
+
+export function* signOut() {
+  try {
+    const data = yield Auth.signOut();
+    console.log('signOutData*******', data);
+    yield put(signOutSuccess());
+  } catch (error) {
+    yield put(signOutFailure(error.message));
+  }
+}
+
+export function* onSignOutStart() {
+  yield takeLatest(AuthenticationActionTypes.SIGN_OUT_START, signOut);
+}
+
 export function* authenticationSagas() {
   yield all([
     call(onSignUpStart),
     call(onVerifyEmailAddressStart),
     call(onResendVerificationEmailStart),
-    call(onSignInStart)
+    call(onSignInStart),
+    call(onGetAuthenticatedUserStart),
+    call(onSignOutStart)
   ]);
 }

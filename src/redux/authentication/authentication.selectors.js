@@ -31,3 +31,8 @@ export const selectLoadingStatus = createSelector(
   [selectAuthentication],
   authentication => authentication.loading
 );
+
+export const selectCurrentUserLoadingStatus = createSelector(
+  [selectAuthentication],
+  authentication => authentication.currentUserLoading
+);

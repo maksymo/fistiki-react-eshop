@@ -9,6 +9,20 @@ export const setSnackbarHidden = () => ({
   type: AuthenticationActionTypes.SET_SNACKBAR_HIDDEN
 });
 
+export const getCurrentAuthenticatedUserStart = () => ({
+  type: AuthenticationActionTypes.GET_AUTHENTICATED_USER_START
+});
+
+export const getCurrentAuthenticatedUserSuccess = user => ({
+  type: AuthenticationActionTypes.GET_AUTHENTICATED_USER_SUCCESS,
+  payload: user
+});
+
+export const getCurrentAuthenticatedUserFailure = error => ({
+  type: AuthenticationActionTypes.GET_AUTHENTICATED_USER_FAILURE,
+  payload: error
+});
+
 export const signUpStart = userData => ({
   type: AuthenticationActionTypes.SIGN_UP_START,
   payload: userData
@@ -65,5 +79,18 @@ export const signInSuccess = username => ({
 
 export const signInFailure = error => ({
   type: AuthenticationActionTypes.SIGN_IN_FAILURE,
+  payload: error
+});
+
+export const signOutStart = () => ({
+  type: AuthenticationActionTypes.SIGN_OUT_START
+});
+
+export const signOutSuccess = () => ({
+  type: AuthenticationActionTypes.SIGN_OUT_SUCCESS
+});
+
+export const signOutFailure = error => ({
+  type: AuthenticationActionTypes.SIGN_OUT_FAILURE,
   payload: error
 });

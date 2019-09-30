@@ -1,5 +1,10 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+import { selectCurrentUser } from './redux/authentication/authentication.selectors';
+import { getCurrentAuthenticatedUserStart } from './redux/authentication/authentication.actions';
 
 import { AppContainer, AppBody } from './App.styles';
 
@@ -10,7 +15,10 @@ import ShopPage from './pages/Shop/Shop.comp';
 import ProductPage from './pages/Product/Product.comp';
 import AuthenticationPage from './pages/Authentication/Authentication.comp';
 
-const App = () => {
+const App = ({ getCurrentAuthenticatedUserStart, currentUser }) => {
+  useEffect(() => {
+    getCurrentAuthenticatedUserStart();
+  }, [getCurrentAuthenticatedUserStart]);
   return (
     <AppContainer>
       <Header />
@@ -19,7 +27,19 @@ const App = () => {
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
           <Route path="/product/:productId" component={ProductPage} />
-          <Route exact path="/sign-in" component={AuthenticationPage} />
+          <Route
+            exact
+            path="/sign-in"
+            render={() =>
+              currentUser &&
+              currentUser.attributes &&
+              currentUser.signInUserSession ? (
+                <Redirect to="/" />
+              ) : (
+                <AuthenticationPage />
+              )
+            }
+          />
         </Switch>
       </AppBody>
       <Footer />
@@ -27,4 +47,16 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
+const mapDispatchToProps = dispatch => ({
+  getCurrentAuthenticatedUserStart: () =>
+    dispatch(getCurrentAuthenticatedUserStart())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
