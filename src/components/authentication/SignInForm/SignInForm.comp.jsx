@@ -30,7 +30,7 @@ import { isRequired, isEmail } from '../../../utils/validation';
 
 const SignIn = ({
   setActiveComponent,
-  selectLoadingStatus,
+  isLoading,
   signInStart,
   snackbarStatus,
   snackbarMsg,
@@ -79,7 +79,7 @@ const SignIn = ({
           autoComplete="email"
           margin="normal"
           variant="outlined"
-          disabled={selectLoadingStatus}
+          disabled={isLoading}
           validate={[isRequired, isEmail]}
         />
         <Field
@@ -94,11 +94,11 @@ const SignIn = ({
           autoComplete="password"
           margin="normal"
           variant="outlined"
-          disabled={selectLoadingStatus}
+          disabled={isLoading}
           validate={[isRequired]}
         />
         <ForgotPasswordText
-          disabled={selectLoadingStatus}
+          disabled={isLoading}
           color={theme.palette.primary.main}
           onClick={() => setActiveComponent('FORGOT_PASSWORD')}
         >
@@ -110,19 +110,15 @@ const SignIn = ({
             size="large"
             color="primary"
             type="submit"
-            disabled={selectLoadingStatus}
+            disabled={isLoading}
           >
-            {selectLoadingStatus ? (
-              <FontAwesomeIcon icon={faSpinner} spin />
-            ) : (
-              'Sign In'
-            )}
+            {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Sign In'}
           </Button>
           <Button
             mx={2}
             size="large"
             color="primary"
-            disabled={selectLoadingStatus}
+            disabled={isLoading}
             onClick={() => setActiveComponent('SIGN_UP')}
           >
             Create Account
@@ -143,7 +139,7 @@ const mapStateToProps = createStructuredSelector({
   snackbarStatus: selectSnackbarStatus,
   snackbarMsg: selectSnackbarMsg,
   snackbarVariant: selectSnackbarVariant,
-  selectLoadingStatus: selectLoadingStatus
+  isLoading: selectLoadingStatus
 });
 
 const mapDispatchToProps = dispatch => ({

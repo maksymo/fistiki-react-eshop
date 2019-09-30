@@ -11,7 +11,8 @@ import {
 import {
   selectSnackbarStatus,
   selectSnackbarMsg,
-  selectSnackbarVariant
+  selectSnackbarVariant,
+  selectLoadingStatus
 } from '../../../redux/authentication/authentication.selectors';
 
 import { SignUpContainer } from './SignUpForm.styles';
@@ -20,6 +21,9 @@ import { ActionButtonsContainer } from '../../../App.styles';
 import { Button } from '@material-ui/core';
 import CustomTextField from '../../common/CustomTextField/CustomTextField.comp';
 import CustomSnackbar from '../../common/CustomSnackbar/CustomSnackbar.comp';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import {
   isRequired,
@@ -30,6 +34,7 @@ import {
 } from '../../../utils/validation';
 
 const SignUp = ({
+  isLoading,
   setActiveComponent,
   signUpStart,
   snackbarStatus,
@@ -78,6 +83,7 @@ const SignUp = ({
           autoComplete="email"
           margin="normal"
           variant="outlined"
+          disabled={isLoading}
           validate={[isRequired, isEmail]}
         />
         <Field
@@ -92,6 +98,7 @@ const SignUp = ({
           autoComplete="password"
           margin="normal"
           variant="outlined"
+          disabled={isLoading}
           validate={[isRequired, minLength8, maxLength64]}
         />
         <Field
@@ -106,6 +113,7 @@ const SignUp = ({
           autoComplete="confirmPassword"
           margin="normal"
           variant="outlined"
+          disabled={isLoading}
           validate={[isRequired, minLength8, maxLength64, passwordMatch]}
         />
         <ActionButtonsContainer>
@@ -114,12 +122,18 @@ const SignUp = ({
             size="large"
             color="primary"
             type="submit"
+            disabled={isLoading}
           >
-            Create Account
+            {isLoading ? (
+              <FontAwesomeIcon icon={faSpinner} spin />
+            ) : (
+              'Create Account'
+            )}
           </Button>
           <Button
             size="large"
             color="primary"
+            disabled={isLoading}
             onClick={() => setActiveComponent('SIGN_IN')}
           >
             Back to Sign In
@@ -139,7 +153,8 @@ const SignUp = ({
 const mapStateToProps = createStructuredSelector({
   snackbarStatus: selectSnackbarStatus,
   snackbarMsg: selectSnackbarMsg,
-  snackbarVariant: selectSnackbarVariant
+  snackbarVariant: selectSnackbarVariant,
+  isLoading: selectLoadingStatus
 });
 
 const mapActionsToProps = dispatch => ({

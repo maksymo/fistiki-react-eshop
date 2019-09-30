@@ -14,7 +14,8 @@ import {
   selectCurrentUser,
   selectSnackbarStatus,
   selectSnackbarMsg,
-  selectSnackbarVariant
+  selectSnackbarVariant,
+  selectLoadingStatus
 } from '../../../redux/authentication/authentication.selectors';
 
 import {
@@ -28,9 +29,13 @@ import { Button } from '@material-ui/core';
 import CustomSnackbar from '../../common/CustomSnackbar/CustomSnackbar.comp';
 import CustomTextField from '../../common/CustomTextField/CustomTextField.comp';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+
 import { isRequired } from '../../../utils/validation';
 
 const SignIn = ({
+  isLoading,
   setActiveComponent,
   currentUser,
   verifyEmailAddressStart,
@@ -75,10 +80,12 @@ const SignIn = ({
           value={verificationCode}
           margin="normal"
           variant="outlined"
+          disabled={isLoading}
           validate={[isRequired]}
         />
         <ResendVerificationEmailText
           color={theme.palette.primary.main}
+          disabled={isLoading}
           onClick={() => resendVerificationEmailStart(currentUser.username)}
         >
           Resend Verification E-mail
@@ -89,12 +96,14 @@ const SignIn = ({
             size="large"
             color="primary"
             type="submit"
+            disabled={isLoading}
           >
-            Submit
+            {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Submit'}
           </Button>
           <Button
             size="large"
             color="primary"
+            disabled={isLoading}
             onClick={() => setActiveComponent('SIGN_UP')}
           >
             Cancel
@@ -115,7 +124,8 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   snackbarStatus: selectSnackbarStatus,
   snackbarMsg: selectSnackbarMsg,
-  snackbarVariant: selectSnackbarVariant
+  snackbarVariant: selectSnackbarVariant,
+  isLoading: selectLoadingStatus
 });
 
 const mapDispatchToProps = dispatch => ({
