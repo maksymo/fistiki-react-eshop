@@ -37,8 +37,6 @@ type User @model @auth(rules: [
   country: String
   tel: String
   orders: [Order] @connection(name: "UserOrders")
-  createdAt: String!
-  updatedAt: String
 }
 
 # queries: null to disable auth for queries.
@@ -48,7 +46,7 @@ type Product @model @auth(rules: [
 {
   id: ID!
   seo: String!
-  category: [Category] @connection(name: "ProductCategories")
+  category: Category @connection(name: "ProductCategory")
   name: String
   shortDescription: String
   description: String
@@ -62,8 +60,6 @@ type Product @model @auth(rules: [
   weightUnit: String
   unit: String
   active: Boolean
-  createdAt: String!
-  updatedAt: String
 }
 
 # queries: null to disable auth for queries.
@@ -74,7 +70,7 @@ type Category @model @auth(rules: [
   id: ID!
   seo: String!
   name: String!
-  products: [Product] @connection(name: "ProductCategories")
+  products: [Product] @connection(name: "ProductCategory")
 }
 
 # Specify queries so we restrict all queries for owners and admin.
@@ -96,8 +92,6 @@ type Order @model @auth(rules: [
   shippingMethod: String
   products: [Product!]!
   user: User! @connection(name: "UserOrders")
-  createdAt: String!
-  updatedAt: String
 }
 
 # queries: null to disable auth for queries.

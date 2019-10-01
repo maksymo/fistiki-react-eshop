@@ -15,7 +15,11 @@ import {
   getCurrentAuthenticatedUserSuccess,
   getCurrentAuthenticatedUserFailure,
   signOutSuccess,
-  signOutFailure
+  signOutFailure,
+  forgotPasswordSuccess,
+  forgotPasswordFailure,
+  forgotPasswordSubmitSuccess,
+  forgotPasswordSubmitFailure
 } from './authentication.actions';
 
 export function* signUp({ payload: { email, password } }) {
@@ -136,6 +140,40 @@ export function* onSignOutStart() {
   yield takeLatest(AuthenticationActionTypes.SIGN_OUT_START, signOut);
 }
 
+export function* forgotPassword({ payload }) {
+  try {
+    yield Auth.forgotPassword(payload);
+    yield put(forgotPasswordSuccess(payload));
+  } catch (error) {
+    yield put(forgotPasswordFailure(error.message));
+  }
+}
+
+export function* onForgotPasswordStart() {
+  yield takeLatest(
+    AuthenticationActionTypes.FORGOT_PASSWORD_START,
+    forgotPassword
+  );
+}
+
+export function* forgotPasswordSubmit({
+  payload: { username, code, new_password }
+}) {
+  try {
+    const data = yield Auth.forgotPasswordSubmit(username, code, new_password);
+    yield put(forgotPasswordSubmitSuccess(data));
+  } catch (error) {
+    yield put(forgotPasswordSubmitFailure(error.message));
+  }
+}
+
+export function* onForgotPasswordSubmitStart() {
+  yield takeLatest(
+    AuthenticationActionTypes.FORGOT_PASSWORD_SUBMIT_START,
+    forgotPasswordSubmit
+  );
+}
+
 export function* authenticationSagas() {
   yield all([
     call(onSignUpStart),
@@ -143,6 +181,8 @@ export function* authenticationSagas() {
     call(onResendVerificationEmailStart),
     call(onSignInStart),
     call(onGetAuthenticatedUserStart),
-    call(onSignOutStart)
+    call(onSignOutStart),
+    call(onForgotPasswordStart),
+    call(onForgotPasswordSubmitStart)
   ]);
 }

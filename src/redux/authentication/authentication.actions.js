@@ -94,3 +94,32 @@ export const signOutFailure = error => ({
   type: AuthenticationActionTypes.SIGN_OUT_FAILURE,
   payload: error
 });
+
+export const forgotPasswordStart = username => ({
+  type: AuthenticationActionTypes.FORGOT_PASSWORD_START,
+  payload: username
+});
+
+export const forgotPasswordSuccess = username => ({
+  type: AuthenticationActionTypes.FORGOT_PASSWORD_SUCCESS,
+  payload: username
+});
+
+export const forgotPasswordFailure = error => ({
+  type: AuthenticationActionTypes.FORGOT_PASSWORD_FAILURE,
+  payload: error
+});
+
+export const forgotPasswordSubmitStart = data => ({
+  type: AuthenticationActionTypes.FORGOT_PASSWORD_SUBMIT_START,
+  payload: data
+});
+
+export const forgotPasswordSubmitSuccess = () => ({
+  type: AuthenticationActionTypes.FORGOT_PASSWORD_SUBMIT_SUCCESS
+});
+
+export const forgotPasswordSubmitFailure = error => ({
+  type: AuthenticationActionTypes.FORGOT_PASSWORD_SUBMIT_FAILURE,
+  payload: error
+});

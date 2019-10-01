@@ -3,53 +3,46 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Field, reduxForm } from 'redux-form';
 
+import { selectLoadingStatus } from '../../../redux/authentication/authentication.selectors';
 import {
   setActiveComponent,
-  signInStart
+  forgotPasswordStart
 } from '../../../redux/authentication/authentication.actions';
-import { selectLoadingStatus } from '../../../redux/authentication/authentication.selectors';
 
-import { SignInContainer, ForgotPasswordText } from './SignInForm.styles';
+import { ForgotPasswordContainer } from './ForgotPassword.styles';
 import { ActionButtonsContainer } from '../../../App.styles';
 
 import { Button } from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
 import CustomTextField from '../../common/CustomTextField/CustomTextField.comp';
+import { isRequired, isEmail } from '../../../utils/validation';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
-import { isRequired, isEmail } from '../../../utils/validation';
-
-const SignIn = ({ setActiveComponent, isLoading, signInStart, valid }) => {
-  const [userData, setUserData] = useState({
-    email: '',
-    password: ''
-  });
-  const { email, password } = userData;
+const ForgotPassword = ({
+  setActiveComponent,
+  forgotPasswordStart,
+  isLoading,
+  valid
+}) => {
+  const [email, setEmail] = useState('');
 
   const emailRef = useRef(null);
-  const passwordRef = useRef(null);
 
   const handleSubmit = event => {
     event.preventDefault();
     emailRef.current.ref.current.handleBlur();
-    passwordRef.current.ref.current.handleBlur();
-    if (valid) signInStart({ username: email, password });
+    if (valid) {
+      forgotPasswordStart(email);
+    }
   };
 
   const handleInputChange = event => {
-    const { value, name } = event.target;
-    setUserData({
-      ...userData,
-      [name]: value
-    });
+    const { value } = event.target;
+    setEmail(value);
   };
-
-  const theme = useTheme();
-
   return (
-    <SignInContainer>
+    <ForgotPasswordContainer>
       <form onSubmit={handleSubmit}>
         <Field
           ref={emailRef}
@@ -66,28 +59,6 @@ const SignIn = ({ setActiveComponent, isLoading, signInStart, valid }) => {
           disabled={isLoading}
           validate={[isRequired, isEmail]}
         />
-        <Field
-          ref={passwordRef}
-          component={CustomTextField}
-          fullWidth
-          onChange={handleInputChange}
-          label="Password"
-          type="password"
-          name="password"
-          value={password}
-          autoComplete="password"
-          margin="normal"
-          variant="outlined"
-          disabled={isLoading}
-          validate={[isRequired]}
-        />
-        <ForgotPasswordText
-          disabled={isLoading}
-          color={theme.palette.primary.main}
-          onClick={() => setActiveComponent('FORGOT_PASSWORD')}
-        >
-          Forgot Password?
-        </ForgotPasswordText>
         <ActionButtonsContainer>
           <Button
             variant="contained"
@@ -96,20 +67,19 @@ const SignIn = ({ setActiveComponent, isLoading, signInStart, valid }) => {
             type="submit"
             disabled={isLoading}
           >
-            {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Sign In'}
+            {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Submit'}
           </Button>
           <Button
-            mx={2}
             size="large"
             color="primary"
             disabled={isLoading}
-            onClick={() => setActiveComponent('SIGN_UP')}
+            onClick={() => setActiveComponent('SIGN_IN')}
           >
-            Create Account
+            Cancel
           </Button>
         </ActionButtonsContainer>
       </form>
-    </SignInContainer>
+    </ForgotPasswordContainer>
   );
 };
 
@@ -119,10 +89,10 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   setActiveComponent: component => dispatch(setActiveComponent(component)),
-  signInStart: userData => dispatch(signInStart(userData))
+  forgotPasswordStart: username => dispatch(forgotPasswordStart(username))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(reduxForm({ form: 'SignInForm' })(SignIn));
+)(reduxForm({ form: 'ForgotPasswordForm' })(ForgotPassword));

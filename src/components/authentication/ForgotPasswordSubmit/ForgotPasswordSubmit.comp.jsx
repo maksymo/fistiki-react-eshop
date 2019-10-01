@@ -1,74 +1,85 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
+import { Field, reduxForm } from 'redux-form';
 
 import {
+  selectLoadingStatus,
+  selectCurrentUser
+} from '../../../redux/authentication/authentication.selectors';
+import {
   setActiveComponent,
-  signUpStart
+  forgotPasswordSubmitStart
 } from '../../../redux/authentication/authentication.actions';
-import { selectLoadingStatus } from '../../../redux/authentication/authentication.selectors';
 
-import { SignUpContainer } from './SignUpForm.styles';
+import { ForgotPasswordSubmitContainer } from './ForgotPasswordSubmit.styles';
 import { ActionButtonsContainer } from '../../../App.styles';
 
 import { Button } from '@material-ui/core';
 import CustomTextField from '../../common/CustomTextField/CustomTextField.comp';
+import {
+  isRequired,
+  passwordMatch,
+  minLength8,
+  maxLength64
+} from '../../../utils/validation';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
-import {
-  isRequired,
-  isEmail,
-  minLength8,
-  maxLength64,
-  passwordMatch
-} from '../../../utils/validation';
-
-const SignUp = ({ isLoading, setActiveComponent, signUpStart, valid }) => {
-  const [userData, setUserData] = useState({
-    email: '',
+const ForgotPasswordSubmit = ({
+  setActiveComponent,
+  forgotPasswordSubmitStart,
+  isLoading,
+  currentUser,
+  valid
+}) => {
+  const [credentials, setCredentials] = useState({
+    code: '',
     password: '',
     confirmPassword: ''
   });
+  const { password, confirmPassword, code } = credentials;
 
-  const { email, password, confirmPassword } = userData;
-
-  const emailRef = useRef(null);
+  const codeRef = useRef(null);
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
 
   const handleSubmit = event => {
     event.preventDefault();
-    emailRef.current.ref.current.handleBlur();
+    codeRef.current.ref.current.handleBlur();
     passwordRef.current.ref.current.handleBlur();
     confirmPasswordRef.current.ref.current.handleBlur();
-    if (valid) signUpStart({ email, password });
+    if (valid) {
+      forgotPasswordSubmitStart({
+        username: currentUser.username,
+        code,
+        new_password: confirmPassword
+      });
+    }
   };
 
   const handleInputChange = event => {
-    const { value, name } = event.target;
-    setUserData({ ...userData, [name]: value });
+    const { name, value } = event.target;
+    setCredentials({ ...credentials, [name]: value });
   };
 
   return (
-    <SignUpContainer>
+    <ForgotPasswordSubmitContainer>
       <form onSubmit={handleSubmit}>
         <Field
-          ref={emailRef}
+          ref={codeRef}
           component={CustomTextField}
           fullWidth
           onChange={handleInputChange}
-          label="Email"
-          type="email"
-          name="email"
-          value={email}
-          autoComplete="email"
+          label="Verification Code"
+          type="text"
+          name="code"
+          value={code}
           margin="normal"
           variant="outlined"
           disabled={isLoading}
-          validate={[isRequired, isEmail]}
+          validate={[isRequired]}
         />
         <Field
           ref={passwordRef}
@@ -108,11 +119,7 @@ const SignUp = ({ isLoading, setActiveComponent, signUpStart, valid }) => {
             type="submit"
             disabled={isLoading}
           >
-            {isLoading ? (
-              <FontAwesomeIcon icon={faSpinner} spin />
-            ) : (
-              'Create Account'
-            )}
+            {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Submit'}
           </Button>
           <Button
             size="large"
@@ -120,24 +127,26 @@ const SignUp = ({ isLoading, setActiveComponent, signUpStart, valid }) => {
             disabled={isLoading}
             onClick={() => setActiveComponent('SIGN_IN')}
           >
-            Back to Sign In
+            Cancel
           </Button>
         </ActionButtonsContainer>
       </form>
-    </SignUpContainer>
+    </ForgotPasswordSubmitContainer>
   );
 };
 
 const mapStateToProps = createStructuredSelector({
-  isLoading: selectLoadingStatus
+  isLoading: selectLoadingStatus,
+  currentUser: selectCurrentUser
 });
 
-const mapActionsToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   setActiveComponent: component => dispatch(setActiveComponent(component)),
-  signUpStart: userData => dispatch(signUpStart(userData))
+  forgotPasswordSubmitStart: credentials =>
+    dispatch(forgotPasswordSubmitStart(credentials))
 });
 
 export default connect(
   mapStateToProps,
-  mapActionsToProps
-)(reduxForm({ form: 'SignUpForm' })(SignUp));
+  mapDispatchToProps
+)(reduxForm({ form: 'ForgotPasswordSubmitForm' })(ForgotPasswordSubmit));

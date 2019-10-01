@@ -32,6 +32,8 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
     case AuthenticationActionTypes.VERIFY_EMAIL_START:
     case AuthenticationActionTypes.RESEND_VERIFICATION_EMAIL_START:
     case AuthenticationActionTypes.EMAIL_SIGN_IN_START:
+    case AuthenticationActionTypes.FORGOT_PASSWORD_START:
+    case AuthenticationActionTypes.FORGOT_PASSWORD_SUBMIT_START:
       return {
         ...state,
         loading: true,
@@ -75,6 +77,25 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
           'A new verification code has been sent to your e-mail address',
         snackbarVariant: 'success'
       };
+    case AuthenticationActionTypes.FORGOT_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentUser: { username: action.payload },
+        snackbarStatus: true,
+        snackbarMsg: 'A verification code has been sent to your e-mail address',
+        snackbarVariant: 'success',
+        activeComponent: 'FORGOT_PASSWORD_SUBMIT'
+      };
+    case AuthenticationActionTypes.FORGOT_PASSWORD_SUBMIT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        snackbarStatus: true,
+        snackbarMsg: 'Password reset successfully!',
+        snackbarVariant: 'success',
+        activeComponent: 'SIGN_IN'
+      };
     case AuthenticationActionTypes.SIGN_IN_SUCCESS:
       return {
         ...state,
@@ -102,6 +123,8 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
     case AuthenticationActionTypes.VERIFY_EMAIL_FAILURE:
     case AuthenticationActionTypes.RESEND_VERIFICATION_EMAIL_FAILURE:
     case AuthenticationActionTypes.SIGN_IN_FAILURE:
+    case AuthenticationActionTypes.FORGOT_PASSWORD_FAILURE:
+    case AuthenticationActionTypes.FORGOT_PASSWORD_SUBMIT_FAILURE:
       let errorMsg = action.payload;
       if (errorMsg.includes('username'))
         errorMsg = errorMsg.replace('username', 'e-mail');
