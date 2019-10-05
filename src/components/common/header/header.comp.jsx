@@ -105,10 +105,8 @@ const Header = ({ currentUser, currentUserLoading }) => {
                 Hello,{' '}
                 {currentUserLoading ? (
                   <FontAwesomeIcon icon={faSpinner} spin />
-                ) : currentUser &&
-                  currentUser.attributes &&
-                  currentUser.attributes.email ? (
-                  currentUser.attributes.email
+                ) : currentUser && currentUser.email ? (
+                  currentUser.email
                 ) : (
                   'Guest'
                 )}

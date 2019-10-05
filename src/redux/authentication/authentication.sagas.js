@@ -112,8 +112,8 @@ export function* onSignInStart() {
 
 export function* getAuthenticatedUser() {
   try {
-    const user = yield Auth.currentAuthenticatedUser();
-    yield put(getCurrentAuthenticatedUserSuccess(user));
+    const user = yield Auth.currentSession();
+    yield put(getCurrentAuthenticatedUserSuccess(user.idToken.payload));
   } catch (error) {
     yield put(getCurrentAuthenticatedUserFailure(error.message));
   }

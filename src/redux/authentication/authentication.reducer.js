@@ -2,6 +2,7 @@ import AuthenticationActionTypes from './authentication.types';
 
 const INITIAL_STATE = {
   currentUser: null,
+  isAdmin: false,
   currentUserLoading: false,
   activeComponent: 'SIGN_IN',
   loading: false,
@@ -43,7 +44,10 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUserLoading: false,
-        currentUser: action.payload
+        currentUser: action.payload,
+        isAdmin: action.payload['cognito:groups'].includes('ROLE_ADMIN')
+          ? true
+          : false
       };
     case AuthenticationActionTypes.SIGN_OUT_SUCCESS:
       return {
