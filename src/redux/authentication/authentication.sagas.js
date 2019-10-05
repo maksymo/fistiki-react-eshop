@@ -128,8 +128,7 @@ export function* onGetAuthenticatedUserStart() {
 
 export function* signOut() {
   try {
-    const data = yield Auth.signOut();
-    console.log('signOutData*******', data);
+    yield Auth.signOut();
     yield put(signOutSuccess());
   } catch (error) {
     yield put(signOutFailure(error.message));
