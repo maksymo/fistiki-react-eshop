@@ -10,10 +10,11 @@ import { AppContainer, AppBody } from './App.styles';
 
 import Header from './components/common/Header/Header.comp';
 import Footer from './components/common/Footer/Footer.comp';
-import HomePage from './pages/Home/Home.comp';
-import ShopPage from './pages/Shop/Shop.comp';
-import ProductPage from './pages/Product/Product.comp';
-import AuthenticationPage from './pages/Authentication/Authentication.comp';
+import Home from './pages/Home/Home.comp';
+import Shop from './pages/Shop/Shop.comp';
+import Product from './pages/Product/Product.comp';
+import Authentication from './pages/Authentication/Authentication.comp';
+import AdminDashboard from './pages/AdminDashboard/AdminDashboard.comp';
 
 const App = ({ getCurrentAuthenticatedUserStart, currentUser }) => {
   useEffect(() => {
@@ -24,22 +25,21 @@ const App = ({ getCurrentAuthenticatedUserStart, currentUser }) => {
       <Header />
       <AppBody>
         <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/shop" component={ShopPage} />
-          <Route path="/product/:productId" component={ProductPage} />
+          <Route exact path="/" component={Home} />
+          <Route path="/shop" component={Shop} />
+          <Route path="/product/:productId" component={Product} />
           <Route
             exact
             path="/sign-in"
             render={() =>
-              currentUser &&
-              currentUser.attributes &&
-              currentUser.signInUserSession ? (
+              currentUser && currentUser['cognito:username'] ? (
                 <Redirect to="/" />
               ) : (
-                <AuthenticationPage />
+                <Authentication />
               )
             }
           />
+          <Route path="/admin/dashboard" component={AdminDashboard} />
         </Switch>
       </AppBody>
       <Footer />

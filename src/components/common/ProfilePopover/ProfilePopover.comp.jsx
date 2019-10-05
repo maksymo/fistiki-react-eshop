@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
 
+import { selectIsAdmin } from '../../../redux/authentication/authentication.selectors';
 import { signOutStart } from '../../../redux/authentication/authentication.actions';
 
 import {
@@ -15,6 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUser,
   faShoppingBag,
+  faUserShield,
   faDoorOpen
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,13 +28,24 @@ const ProfilePopover = ({
   popoverId,
   handleMenuClose,
   currentUser,
-  signOutStart
+  isAdmin,
+  signOutStart,
+  history
 }) => {
   const menuOptions = [
     { label: 'Profile', icon: faUser, action: () => {} },
-    { label: 'Order', icon: faShoppingBag, action: () => {} },
+    { label: 'Orders', icon: faShoppingBag, action: () => {} },
     { label: 'Sign out', icon: faDoorOpen, action: signOutStart }
   ];
+
+  if (isAdmin) {
+    const adminMenuOption = {
+      label: 'Admin',
+      icon: faUserShield,
+      action: () => history.push('/admin/dashboard')
+    };
+    menuOptions.splice(2, 0, adminMenuOption);
+  }
 
   return (
     <Menu
@@ -70,11 +85,17 @@ const ProfilePopover = ({
   );
 };
 
+const mapStateToProps = createStructuredSelector({
+  isAdmin: selectIsAdmin
+});
+
 const mapDispatchToProps = dispatch => ({
   signOutStart: () => dispatch(signOutStart())
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(ProfilePopover);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ProfilePopover)
+);

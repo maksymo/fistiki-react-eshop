@@ -12,6 +12,11 @@ export const selectCurrentUser = createSelector(
   authentication => authentication.currentUser
 );
 
+export const selectIsAdmin = createSelector(
+  [selectAuthentication],
+  authentication => authentication.isAdmin
+);
+
 export const selectSnackbarStatus = createSelector(
   [selectAuthentication],
   authentication => authentication.snackbarStatus
